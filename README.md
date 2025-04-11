@@ -29,7 +29,7 @@ files using Doxygen followed by .html files using Sphinx, then view the .html in
 browser. E.g.
 
 ```
-cd ./docs && mkdir build && mkdir build/doxygen
+cd ./docs && mkdir -p build/doxygen
 doxygen doxygen/doxygen.dox && make html
 open build/html/index.html
 ```

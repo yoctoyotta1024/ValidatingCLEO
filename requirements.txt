@@ -1,0 +1,16 @@
+sphinx
+furo
+sphinx_copybutton
+sphinxcontrib-bibtex
+sphinxcontrib-applehelp
+sphinxcontrib-htmlhelp
+breathe
+
+numpy
+scipy
+matplotlib
+xarray
+pre-commit
+ruamel.yaml
+zarr
+awkward
