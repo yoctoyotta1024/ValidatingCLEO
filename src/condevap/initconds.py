@@ -16,37 +16,13 @@ License: BSD 3-Clause "New" or "Revised" License
 https://opensource.org/licenses/BSD-3-Clause
 -----
 File Description:
-Script generates input files for CLEO 0-D box model with
+Source files for script to generates input files for CLEO 0-D box model with
 mono-size droplet distribution as in S. Arabas and S. Shima 2017.
-E.g. execute
-``
-python ./src/condevap/initconds.py ~/CLEO/ /work/bm1183/m300950/validating_cleo/build \
-        /home/m/m300950/validating_cleo/src/condevap/config.yaml False False
-``
 '''
-
-import argparse
-import sys
-from pathlib import Path
-
-
-def main(path2pySD, path2build, original_config, isfigures=[False, False]):
-    if not (path2build.is_dir() and all([(path2build / f"{d}").is_dir() for d in ["tmp", "share", "bin"]])):
-        raise OSError("Your build directory and bin, tmp, and share subdirectories do not exist")
-    else:
-        for d in ["tmp", "share", "bin"]:
-            path2dir = path2build / f"{d}" / "condevap"
-            path2dir.mkdir(exist_ok=True)
-
-    config_filenames = generate_configurations(path2pySD, path2build, original_config)
-
-    gridbox_boundaries(path2pySD, config_filenames[0], isfigures=isfigures)
-
-    for cf in config_filenames:
-        initial_superdroplet_conditions(path2pySD, cf, isfigures=isfigures)
 
 def generate_configurations(path2pySD, path2build, original_config):
     import shutil
+    import sys
     import yaml
 
     sys.path.append(str(path2pySD))  # for imports from pySD package
@@ -55,8 +31,8 @@ def generate_configurations(path2pySD, path2build, original_config):
     # parameters same for each run
     tmppath = path2build / "tmp" / "condevap"
     sharepath = path2build / "share" / "condevap"
-    binpath = path2build / "share" / "condevap"
-    savefigpath = path2build / "bin" / "condevap"
+    binpath = path2build / "bin" / "condevap"
+    savefigpath = binpath
     constants_filename = path2build / "_deps" / "cleo-src" / "libs" / "cleoconstants.hpp"
     grid_filename = sharepath / f"dimlessGBxboundaries.dat"
 
@@ -101,7 +77,9 @@ def generate_configurations(path2pySD, path2build, original_config):
     return config_filenames
 
 def gridbox_boundaries(path2pySD, config_filename, isfigures=[False, False]):
+    import sys
     import yaml
+    from pathlib import Path
 
     sys.path.append(path2pySD)  # for imports from pySD package
     from pySD import geninitconds as gic
@@ -143,6 +121,7 @@ def gridbox_boundaries(path2pySD, config_filename, isfigures=[False, False]):
 def initial_superdroplet_conditions(
     path2pySD, config_filename, isfigures=[False, False]
 ):
+    import sys
     import yaml
     from pathlib import Path
 
@@ -208,20 +187,3 @@ def initial_superdroplet_conditions(
             savelabel=savelabel,
         )
         ### ---------------------------------------------------------------- ###
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("path2pySD", type=Path, help="Absolute path for CLEO (for pySD)")
-    parser.add_argument("path2build", type=Path, help="Absolute path for build directory")
-    parser.add_argument("original_config", type=Path, help="Absolute path for original config file")
-    parser.add_argument("is_plotfigs", type=bool, help="True then make initial condition figures")
-    parser.add_argument("is_savefigs", type=bool, help="True then save initial condition figures")
-    args = parser.parse_args()
-
-    path2pySD = args.path2pySD
-    path2build = args.path2build
-    original_config = args.original_config
-    isfigures = [args.is_plotfigs, args.is_savefigs]
-
-    main(path2pySD, path2build, original_config, isfigures=isfigures)
