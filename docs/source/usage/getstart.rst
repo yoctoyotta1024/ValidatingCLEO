@@ -35,3 +35,4 @@ CLEO repository to somewhere in your filesystem and checkout to CLEO version v0.
   $ cd CLEO && git checkout -b v0.39.1
 
 That's it, you're done! Now maybe you want to compile and run one of the test cases in ``src/``.
+For example you could try out the :ref:`condensation/evaporation<condevap>` test case.
