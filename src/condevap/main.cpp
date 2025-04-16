@@ -9,7 +9,7 @@
  * Author: Clara Bayley (CB)
  * Additional Contributors:
  * -----
- * Last Modified: Friday 11th April 2025
+ * Last Modified: Wednesday 16th April 2025
  * Modified By: CB
  * -----
  * License: BSD 3-Clause "New" or "Revised" License
@@ -112,35 +112,28 @@ inline Observer auto create_superdrops_observer(const unsigned int interval,
  * and uncomment observer which returns "obsX >> obsY >> ... >> obsZ;"
  */
 
-// template <typename Store>
-// inline Observer auto create_observer(const Config &config,
-//                                      const Timesteps &tsteps,
-//                                      Dataset<Store> &dataset) {
-//   const auto obsstep = tsteps.get_obsstep();
-//   const auto maxchunk = config.get_maxchunk();
-//   const auto ngbxs = config.get_ngbxs();
-
-//   const Observer auto obs1 = StreamOutObserver(obsstep * 10, &step2realtime);
-
-//   const Observer auto obs2 =
-//       TimeObserver(obsstep, dataset, maxchunk, &step2dimlesstime);
-
-//   const Observer auto obs3 = GbxindexObserver(dataset, maxchunk, ngbxs);
-
-//   const Observer auto obs4 = StateObserver(obsstep, dataset, maxchunk,
-//   ngbxs);
-
-//   const Observer auto obs5 =
-//       create_superdrops_observer(obsstep, dataset, maxchunk);
-
-//   return obs5 >> obs4 >> obs3 >> obs2 >> obs1;
-// }
-
 template <typename Store>
 inline Observer auto create_observer(const Config &config,
                                      const Timesteps &tsteps,
                                      Dataset<Store> &dataset) {
-  return NullObserver{};
+  const auto obsstep = tsteps.get_obsstep();
+  const auto maxchunk = config.get_maxchunk();
+  const auto ngbxs = config.get_ngbxs();
+
+  const Observer auto obs1 = StreamOutObserver(obsstep * 10, &step2realtime);
+
+  const Observer auto obs2 =
+      TimeObserver(obsstep, dataset, maxchunk, &step2dimlesstime);
+
+  const Observer auto obs3 = GbxindexObserver(dataset, maxchunk, ngbxs);
+
+  const Observer auto obs4 = StateObserver(obsstep, dataset, maxchunk,
+  ngbxs);
+
+  const Observer auto obs5 =
+      create_superdrops_observer(obsstep, dataset, maxchunk);
+
+  return obs5 >> obs4 >> obs3 >> obs2 >> obs1;
 }
 /* ---------------------------------------------------------------- */
 
