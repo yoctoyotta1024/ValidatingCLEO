@@ -111,10 +111,10 @@ def plot_one_dataset(path2pySD, axs, gridfile, dataset, setupfile, do_plotkohler
     axs[0].set_xlim([-1, 1])
     axs[0].set_ylim([0, 160])
     for ax in axs[1:]:
-        ax.set_xlim([0.125, 10])
+        ax.set_xlim([0.125, 15])
         ax.set_xscale("log")
     axs[1].set_ylim([-1, 1])
-    axs[2].set_ylim([15, 65])
+    axs[2].set_ylim([25, 75])
 
     for ax in axs:
         ax.spines[["right", "top"]].set_visible(False)
@@ -175,7 +175,7 @@ def plot_results(path2pySD, gridfile, datasets, setups):
     axes[1, 0].set_yticklabels(yticks, fontsize=fsz)
 
     for ax in axes[2, :]:
-        yticks = [15, 30, 45, 60]
+        yticks = [25, 50, 75]
         ax.set_yticks(yticks)
         ax.set_yticklabels([])
         ax.set_ylabel("")
