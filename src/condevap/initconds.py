@@ -40,11 +40,11 @@ def generate_configurations(path2pySD, path2build, original_config):
 
     # parameters specific for each run
     nruns = 9
-    mono_radius = [1.0e-07] * 6 + [5.0e-08] * 3
+    mono_radius = [1.0e-07] * 6 + [3.0e-08] * 3
     numconc = [50.0e6] * 3 + [500.0e6] * 6
-    CONDTSTEP = [1] * 9
-    COUPLTSTEP = [1] * 9
-    OBSTSTEP = [2] * 9
+    CONDTSTEP = [0.1] * 9
+    COUPLTSTEP = [0.1] * 9
+    OBSTSTEP = [0.1] * 9
     T_END = [300, 600, 150000] * 3
     W_avg = [1, 0.5, 0.002] * 3
     TAU_half = [150, 300, 75000] * 3

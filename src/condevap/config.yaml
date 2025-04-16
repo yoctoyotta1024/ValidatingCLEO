@@ -36,8 +36,8 @@ domain:
 
 timesteps:
   CONDTSTEP: XXX                                              # time between SD condensation [s]
-  COLLTSTEP: 1                                                # time between SD collision [s]
-  MOTIONTSTEP: 1                                              # time between SDM motion [s]
+  COLLTSTEP: 0.1                                              # time between SD collision [s]
+  MOTIONTSTEP: 0.1                                            # time between SDM motion [s]
   COUPLTSTEP: XXX                                             # time between dynamic couplings [s]
   OBSTSTEP: XXX                                               # time between SDM observations [s]
   T_END: XXX                                                  # time span of integration from 0s to T_END [s]
@@ -71,7 +71,7 @@ coupled_dynamics:
   type: cvode                                              # type of coupled dynamics to configure
   # initial (uniform) thermodynamic conditions #
   P_init: 100000.0                                         # initial pressure [Pa]
-  TEMP_init: 273.15                                        # initial temperature [T]
+  TEMP_init: 298.15                                        # initial temperature [T]
   relh_init: 98.0                                          # initial relative humidity (%)
   # ODE solver parameters #
   W_avg: XXX                                               # average amplitude of sinusoidal w [m/s] (dP/dt ~ w*dP/dz)
