@@ -42,8 +42,8 @@ def generate_configurations(path2pySD, path2build, original_config):
     nruns = 10
     volexpr0 = [30.531e-06] * 6 + [10.177e-06] * 4
     numconc = [2**23] * 6 + [3**3 * 2**23] * 4
-    maxnsupers = [8192, 131072] * 5
-    COLLTSTEP = [1] * 2 + [0.1] * 8
+    maxnsupers = [8192, 131072] * 3 + [131072, 2097152] * 4
+    COLLTSTEP = [1] * 6 + [0.1] * 4
     T_END = [3600] * 2 + [1800] * 4 + [3600] * 4
 
     config_filenames = []
