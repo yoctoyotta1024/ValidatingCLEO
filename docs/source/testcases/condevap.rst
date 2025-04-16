@@ -3,6 +3,7 @@
 Condensation/Evaporation
 ========================
 
+Test-case based on reproducing figure 7 of :cite:`arabasshima2017`.
 
 Compile Program
 ---------------
