@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Our Docs" href="ourdocs.html" /><link rel="prev" title="Welcome to ValidatingCLEO’s Documentation!" href="../index.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Condensation/Evaporation" href="../testcases/condevap.html" /><link rel="prev" title="Welcome to ValidatingCLEO’s Documentation!" href="../index.html" />
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
         <title>Getting Started - ValidatingCLEO 0.0.0 documentation</title>
@@ -201,6 +201,7 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testcases/condevap.html">Condensation/Evaporation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ourdocs.html">Our Docs</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/yoctoyotta1024/ValidatingCLEO.git">GitHub Repo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
@@ -264,12 +265,14 @@ conda as listed in the environment.yml):</p>
 </div>
 <p>which will be used when you try to commit something or you execute <code class="docutils literal notranslate"><span class="pre">pre-commit</span> <span class="pre">run</span></code>. You can learn
 more about the powers of pre-commit from <a class="reference external" href="https://pre-commit.com">their documentation</a>.</p>
-<p>For now, CLEO’s python packages are not readily installable and so you will have to clone the CLEO
-repository to somewhere in your filesystem:</p>
+<p>For now, CLEO’s python packages are not readily installable and so you will have to clone the
+CLEO repository to somewhere in your filesystem and checkout to CLEO version v0.39.1:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/yoctoyotta1024/CLEO.git
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>CLEO<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>v0.39.1
 </pre></div>
 </div>
-<p>That’s it, you’re done! Now maybe you want to compile and run one of the test cases in <code class="docutils literal notranslate"><span class="pre">src/</span></code>.</p>
+<p>That’s it, you’re done! Now maybe you want to compile and run one of the test cases in <code class="docutils literal notranslate"><span class="pre">src/</span></code>.
+For example you could try out the <a class="reference internal" href="../testcases/condevap.html#condevap"><span class="std std-ref">condensation/evaporation</span></a> test case.</p>
 </section>
 
         </article>
@@ -277,12 +280,12 @@ repository to somewhere in your filesystem:</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="ourdocs.html">
+          <a class="next-page" href="../testcases/condevap.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Our Docs</div>
+                <div class="title">Condensation/Evaporation</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -307,7 +310,7 @@ repository to somewhere in your filesystem:</p>
             
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 11 April 2025</div>
+              Last updated on 16 April 2025</div>
           </div>
           <div class="right-details">
             
