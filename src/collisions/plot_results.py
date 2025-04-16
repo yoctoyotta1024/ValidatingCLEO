@@ -21,5 +21,5 @@ using results from CLEO 0-D collisions-only box model.
 """
 
 
-def plot_results(path2pySD, gridfile, datasets, setups):
+def plot_results(path2pySD, grid_filename, datasets, setups):
     print("WORK IN PROGRESS")

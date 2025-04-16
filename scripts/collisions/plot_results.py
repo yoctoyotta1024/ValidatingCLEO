@@ -30,14 +30,14 @@ sys.path.append(str(Path(__file__).resolve().parents[2] / "src"))
 import collisions.plot_results as collsplt
 
 
-def main(path2CLEO, gridfile, path2bin, path4figs):
+def main(path2CLEO, grid_filename, path2bin, path4figs):
     datasets = {}
     setups = {}
     for r in range(9):
         datasets[r] = path2bin / f"sol_{r}.zarr"
         setups[r] = path2bin / f"setup_{r}.txt"
 
-    fig, axes = collsplt.plot_results(path2CLEO, gridfile, datasets, setups)
+    fig, axes = collsplt.plot_results(path2CLEO, grid_filename, datasets, setups)
     savename = path4figs / "arabas_shima_2017.png"
     fig.savefig(savename, dpi=400, bbox_inches="tight", facecolor="w")
     print("Figure .png saved as: " + str(savename))
@@ -46,7 +46,9 @@ def main(path2CLEO, gridfile, path2bin, path4figs):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("path2CLEO", type=Path, help="Absolute path of CLEO (for pySD)")
-    parser.add_argument("gridfile", type=Path, help="Absolute path of .dat grid file")
+    parser.add_argument(
+        "grid_filename", type=Path, help="Absolute path of .dat grid file"
+    )
     parser.add_argument(
         "path2bin", type=Path, help="Absolute path to dataset and setup files"
     )
@@ -56,8 +58,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     path2CLEO = args.path2CLEO
-    gridfile = args.gridfile
+    grid_filename = args.grid_filename
     path2bin = args.path2bin
     path4figs = args.path4figs
 
-    main(args.path2CLEO, args.gridfile, args.path2bin, args.path4figs)
+    main(args.path2CLEO, args.grid_filename, args.path2bin, args.path4figs)
