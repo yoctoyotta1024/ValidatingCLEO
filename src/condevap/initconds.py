@@ -9,7 +9,7 @@ Created Date: Friday 11th April 2025
 Author: Clara Bayley (CB)
 Additional Contributors:
 -----
-Last Modified: Monday 14th April 2025
+Last Modified: Wednesday 16th April 2025
 Modified By: CB
 -----
 License: BSD 3-Clause "New" or "Revised" License
@@ -68,7 +68,7 @@ def generate_configurations(path2pySD, path2build, original_config):
             "grid_filename" : str(grid_filename),
             "initsupers_filename" : initsupers_filename,
             "setup_filename" : str(binpath / f"setup_{r}.txt"),
-            "zarrbasedir" : str(binpath / f"sol_{r}.txt"),
+            "zarrbasedir" : str(binpath / f"sol_{r}.zarr"),
             "W_avg" : W_avg[r],
             "TAU_half" : TAU_half[r],
         }
