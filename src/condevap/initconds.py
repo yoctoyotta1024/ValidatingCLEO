@@ -1,4 +1,4 @@
-'''
+"""
 Copyright (c) 2025 MPI-M, Clara Bayley
 
 
@@ -18,12 +18,12 @@ https://opensource.org/licenses/BSD-3-Clause
 File Description:
 Source files for script to generates input files for CLEO 0-D box model with
 mono-size droplet distribution as in S. Arabas and S. Shima 2017.
-'''
+"""
+
 
 def generate_configurations(path2pySD, path2build, original_config):
     import shutil
     import sys
-    import yaml
 
     sys.path.append(str(path2pySD))  # for imports from pySD package
     from pySD import editconfigfile
@@ -33,12 +33,14 @@ def generate_configurations(path2pySD, path2build, original_config):
     sharepath = path2build / "share" / "condevap"
     binpath = path2build / "bin" / "condevap"
     savefigpath = binpath
-    constants_filename = path2build / "_deps" / "cleo-src" / "libs" / "cleoconstants.hpp"
-    grid_filename = sharepath / f"dimlessGBxboundaries.dat"
+    constants_filename = (
+        path2build / "_deps" / "cleo-src" / "libs" / "cleoconstants.hpp"
+    )
+    grid_filename = sharepath / "dimlessGBxboundaries.dat"
 
     # parameters specific for each run
     nruns = 9
-    mono_radius = [1.0e-07] * 6 + [5.0e-08] * 3 
+    mono_radius = [1.0e-07] * 6 + [5.0e-08] * 3
     numconc = [50.0e6] * 3 + [500.0e6] * 6
     CONDTSTEP = [1] * 9
     COUPLTSTEP = [1] * 9
@@ -52,29 +54,30 @@ def generate_configurations(path2pySD, path2build, original_config):
         cf = tmppath / f"config_{r}.yaml"
         shutil.copy(original_config, cf)
         config_filenames.append(cf)
-        
+
         initsupers_filename = str(sharepath / f"dimlessSDsinit_{r//3}.dat")
 
         params = {
-            "savefigpath" : str(savefigpath),
-            "sharepath" : str(sharepath),
+            "savefigpath": str(savefigpath),
+            "sharepath": str(sharepath),
             "mono_radius": mono_radius[r],
-            "numconc" : numconc[r],
-            "CONDTSTEP" : CONDTSTEP[r],
-            "COUPLTSTEP" : COUPLTSTEP[r],
-            "OBSTSTEP" : OBSTSTEP[r],
-            "T_END" : T_END[r],
-            "constants_filename" : str(constants_filename),
-            "grid_filename" : str(grid_filename),
-            "initsupers_filename" : initsupers_filename,
-            "setup_filename" : str(binpath / f"setup_{r}.txt"),
-            "zarrbasedir" : str(binpath / f"sol_{r}.zarr"),
-            "W_avg" : W_avg[r],
-            "TAU_half" : TAU_half[r],
+            "numconc": numconc[r],
+            "CONDTSTEP": CONDTSTEP[r],
+            "COUPLTSTEP": COUPLTSTEP[r],
+            "OBSTSTEP": OBSTSTEP[r],
+            "T_END": T_END[r],
+            "constants_filename": str(constants_filename),
+            "grid_filename": str(grid_filename),
+            "initsupers_filename": initsupers_filename,
+            "setup_filename": str(binpath / f"setup_{r}.txt"),
+            "zarrbasedir": str(binpath / f"sol_{r}.zarr"),
+            "W_avg": W_avg[r],
+            "TAU_half": TAU_half[r],
         }
         editconfigfile.edit_config_params(cf, params)
 
     return config_filenames
+
 
 def gridbox_boundaries(path2pySD, config_filename, isfigures=[False, False]):
     import sys
@@ -98,7 +101,7 @@ def gridbox_boundaries(path2pySD, config_filename, isfigures=[False, False]):
         constants_filename = config["inputfiles"]["constants_filename"]
         grid_filename = file2write
         savefigpath = Path(pyconfig["paths"]["savefigpath"])
-    
+
         ### --- settings for 0-D Model gridbox boundaries --- ###
         zgrid = [0, 100, 100]
         xgrid = [0, 100, 100]
@@ -131,7 +134,6 @@ def initial_superdroplet_conditions(
         dryrgens,
         probdists,
         attrsgen,
-        crdgens,
     )
     from pySD import geninitconds as gic
 

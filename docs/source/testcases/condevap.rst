@@ -29,7 +29,7 @@ Then compile the example with:
       intel \
       /home/m/m300950/validating_cleo/src/ \
       /work/bm1183/m300950/validating_cleo/build
- 
+
 
 Initial conditions
 ------------------

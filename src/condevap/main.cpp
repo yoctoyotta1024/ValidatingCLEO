@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2025 MPI-M, Clara Bayley
- * 
- * 
+ *
+ *
  * ----- ValidatingCLEO -----
  * File: main.cpp
  * Project: condevap
