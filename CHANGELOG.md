@@ -2,6 +2,24 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.2.0](https://github.com/yoctoyotta1024/ValidatingCLEO/compare/fca018398bd526034bd4e0e90d794e9b758af992..v0.2.0) - 2025-04-16
+#### Bug Fixes
+- include observers in cond/evap run - ([a834bed](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/a834bed37dd34c2fcf61d0f8b5d2348182e5f518)) - clara.bayley
+- correct typo on zarr base dir param - ([1395fcb](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/1395fcb260bd2682ad2133da63a48e1c3ad27d2a)) - clara.bayley
+#### Documentation
+- new documentation for cond/evap example - ([be64eeb](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/be64eeb352472d5c65163bd4cd0916a05ea0cc8c)) - clara.bayley
+#### Features
+- new script to plot results of cond/evap example - ([1e62e77](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/1e62e777f39a9073a073602ca65c7bd037788cb9)) - clara.bayley
+- source files for cond/evap test case - ([717e607](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/717e607900a3cb678062e396caede7516e114e32)) - clara.bayley
+- new bash scripts to build compile and run test cases - ([64e625e](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/64e625e5038390b5e3bc069ba12dac00bd3ced14)) - clara.bayley
+- copy bash scripts from scripts/levante/bash directory in CLEO - ([fca0183](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/fca018398bd526034bd4e0e90d794e9b758af992)) - clara.bayley
+#### Miscellaneous Chores
+- formatting - ([a74ca60](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/a74ca6041f1cafe6f1bdd9ee92f6f98693838b56)) - clara.bayley
+#### Refactoring
+- move main program part of initial conditions generation from source into scripts dir - ([78decbf](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/78decbf01584ff5a216e385235d1c51d3867a12b)) - clara.bayley
+
+- - -
+
 ## [v0.1.0](https://github.com/yoctoyotta1024/ValidatingCLEO/compare/0e2bbdc2f17d39e210f4714de18bc7d61692ac12..v0.1.0) - 2025-04-11
 #### Features
 - initial base repository - ([0e2bbdc](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/0e2bbdc2f17d39e210f4714de18bc7d61692ac12)) - clara.bayley
