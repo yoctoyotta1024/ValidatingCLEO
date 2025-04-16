@@ -33,12 +33,12 @@ import collisions.plot_results as collsplt
 def main(path2CLEO, grid_filename, path2bin, path4figs):
     datasets = {}
     setups = {}
-    for r in range(9):
+    for r in range(10):
         datasets[r] = path2bin / f"sol_{r}.zarr"
         setups[r] = path2bin / f"setup_{r}.txt"
 
     fig, axes = collsplt.plot_results(path2CLEO, grid_filename, datasets, setups)
-    savename = path4figs / "arabas_shima_2017.png"
+    savename = path4figs / "shima_2009.png"
     fig.savefig(savename, dpi=400, bbox_inches="tight", facecolor="w")
     print("Figure .png saved as: " + str(savename))
 
