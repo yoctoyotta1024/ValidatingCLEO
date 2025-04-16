@@ -30,6 +30,7 @@ Contents
    :maxdepth: 1
 
    usage/getstart
+   testcases/condevap
    usage/ourdocs
 
    GitHub Repo <https://github.com/yoctoyotta1024/ValidatingCLEO.git>
