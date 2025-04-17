@@ -9,7 +9,7 @@ Created Date: Thursday 17th April 2025
 Author: Clara Bayley (CB)
 Additional Contributors:
 -----
-Last Modified: Thursday 17th April 2025
+Last Modified: Thursday 24th April 2025
 Modified By: CB
 -----
 License: BSD 3-Clause "New" or "Revised" License
@@ -49,10 +49,10 @@ def main(path2pySD, path2build, original_config, isfigures=[False, False]):
         path2pySD, path2build, original_config
     )
 
-    ic.gridbox_boundaries(path2pySD, config_filenames[0], isfigures=isfigures)
-
     for cf in config_filenames:
+        ic.gridbox_boundaries(path2pySD, cf, isfigures=isfigures)
         ic.initial_superdroplet_conditions(path2pySD, cf, isfigures=isfigures)
+        ic.thermodynamic_conditions(path2pySD, cf, isfigures=isfigures)
 
 
 if __name__ == "__main__":
