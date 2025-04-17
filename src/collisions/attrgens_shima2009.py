@@ -9,7 +9,7 @@ Created Date: Wednesday 16th April 2025
 Author: Clara Bayley (CB)
 Additional Contributors:
 -----
-Last Modified: Wednesday 16th April 2025
+Last Modified: Thursday 17th April 2025
 Modified By: CB
 -----
 License: BSD 3-Clause "New" or "Revised" License
@@ -17,8 +17,9 @@ https://opensource.org/licenses/BSD-3-Clause
 -----
 File Description:
 Radius and xi generators as in Shima et al. 2009. File copied from
-CLEO v0.39.4 examples/boxmodelcollisions/attrgens_shima2009.py
+CLEO v0.39.5 examples/boxmodelcollisions/attrgens_shima2009.py
 """
+
 
 import numpy as np
 
@@ -45,7 +46,6 @@ class SampleRadiiShima2009:
 
         if nbins:
             radii = self.sample_truncated_volume_exponential(nbins)
-            print(len(radii))
             return radii  # [m]
         else:
             return np.array([])
