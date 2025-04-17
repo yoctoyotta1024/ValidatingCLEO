@@ -2,6 +2,25 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.3.0](https://github.com/yoctoyotta1024/ValidatingCLEO/compare/a8ac779a9a7e605bfdb41df18aa102d82cdf6217..v0.3.0) - 2025-04-17
+#### Bug Fixes
+- correct name and range of plotting script - ([4591115](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/4591115dfc346cfd37bec030d72545b98f5ac40b)) - clara.bayley
+#### Documentation
+- doc to explain collisions test case - ([5340cfe](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/5340cfeade5ca28b983f44c1dd2b2776dd504789)) - clara.bayley
+- cite arabas and shima 2017 - ([7e3cef2](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/7e3cef2d6276777b02f0fd13b75ffa1388fc4a87)) - clara.bayley
+#### Features
+- collisions run scripts - ([a7da945](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/a7da945393d8989cf152013707e956db26e1bca2)) - clara.bayley
+- source files for collisions test case - ([cf4b3c1](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/cf4b3c176c9179235a854812e5330b13e11dd3b7)) - clara.bayley
+#### Miscellaneous Chores
+- rename for consistency - ([92901cc](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/92901cc47574ecf14a6636475e0e20337b4addf1)) - clara.bayley
+#### Performance Improvements
+- correct comment - ([6c5089b](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/6c5089b97661fceadc83a184f1a07df1a5818a8c)) - clara.bayley
+#### Refactoring
+- edit initconds and add plotting functions for collisions - ([a4f5cee](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/a4f5cee8e718fc20c225b66aff1ba2155fbf8074)) - clara.bayley
+- change initial conditions - ([a8ac779](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/a8ac779a9a7e605bfdb41df18aa102d82cdf6217)) - clara.bayley
+
+- - -
+
 ## [v0.2.0](https://github.com/yoctoyotta1024/ValidatingCLEO/compare/fca018398bd526034bd4e0e90d794e9b758af992..v0.2.0) - 2025-04-16
 #### Bug Fixes
 - include observers in cond/evap run - ([a834bed](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/a834bed37dd34c2fcf61d0f8b5d2348182e5f518)) - clara.bayley
