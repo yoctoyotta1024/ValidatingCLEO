@@ -154,12 +154,11 @@ def initial_superdroplet_conditions(
         ### --- settings for initial superdroplets --- ###
         # settings for superdroplet attributes
         dryradius = pyconfig["supers"]["dryradius"]
-        rspan = pyconfig["supers"]["rspan"]
         volexpr0 = pyconfig["supers"]["volexpr0"]
         numconc = pyconfig["supers"]["numconc"]
 
         # attribute generators
-        radiigen = SampleRadiiShima2009(volexpr0, rspan)
+        radiigen = SampleRadiiShima2009(volexpr0)
         dryradiigen = rgens.MonoAttrGen(dryradius)
         xiprobdist = SampleXiShima2009()
         coord3gen = None
