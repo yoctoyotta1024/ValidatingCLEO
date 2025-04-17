@@ -31,6 +31,7 @@ Contents
 
    usage/getstart
    testcases/condevap
+   testcases/collisions
    usage/ourdocs
 
    GitHub Repo <https://github.com/yoctoyotta1024/ValidatingCLEO.git>
