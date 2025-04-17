@@ -112,6 +112,14 @@ def plot_massdendistrib_evolution(
             radius = sddata2plot["radius"][n]
             xi = sddata2plot["xi"][n]
             nsupers = len(sdgbxindex)
+
+            mass = (
+                np.sum(1000.0 * 4.0 / 3.0 * (radius / 1e6) ** 3 * np.pi * xi)
+                * 1000
+                / 1e6
+            )
+            print(f"mass of water in domain = {mass} g cm-3")
+
             hist, hcens = plot_massdendistrib(
                 path2pySD, sdgbxindex, radius, xi, gbxs, sddata, nbins, rspan, smoothsig
             )

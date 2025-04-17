@@ -9,16 +9,17 @@ Created Date: Wednesday 16th April 2025
 Author: Clara Bayley (CB)
 Additional Contributors:
 -----
-Last Modified: Wednesday 16th April 2025
+Last Modified: Thursday 17th April 2025
 Modified By: CB
 -----
 License: BSD 3-Clause "New" or "Revised" License
 https://opensource.org/licenses/BSD-3-Clause
 -----
 File Description:
-Radius and xi generators as in Shima et al. 2009. File copied from
-CLEO v0.39.4 examples/boxmodelcollisions/attrgens_shima2009.py
+Radius and xi generators as in Shima et al. 2009. File adapted from
+CLEO v0.39.6 examples/boxmodelcollisions/attrgens_shima2009.py
 """
+
 
 import numpy as np
 
@@ -28,7 +29,7 @@ class SampleRadiiShima2009:
     with probability weighted by volume exponential probability distribution, as in
     Shima et al. 2009"""
 
-    def __init__(self, radius0, rspan):
+    def __init__(self, radius0, rspan=None):
         self.rspan = rspan  # [min, max] radii to sample between [m]
         self.vol0 = (
             4.0 / 3.0 * np.pi * radius0**3
@@ -45,7 +46,6 @@ class SampleRadiiShima2009:
 
         if nbins:
             radii = self.sample_truncated_volume_exponential(nbins)
-            print(len(radii))
             return radii  # [m]
         else:
             return np.array([])
@@ -59,9 +59,12 @@ class SampleRadiiShima2009:
             n = nbins - len(radii_sample)
             vols = np.random.exponential(self.vol0, n)  # [m^3]
             radii = np.power(3.0 / (4.0 * np.pi) * vols, 1.0 / 3.0)
-            in_range = np.where(radii >= self.rspan[0], radii, 0)
-            in_range = np.where(radii <= self.rspan[1], in_range, 0)
-            radii_sample.extend(in_range[in_range > 0])
+            if self.rspan is None:
+                radii_sample.extend(radii)
+            else:
+                in_range = np.where(radii >= self.rspan[0], radii, 0)
+                in_range = np.where(radii <= self.rspan[1], in_range, 0)
+                radii_sample.extend(in_range[in_range > 0])
 
         return np.array(radii_sample)[:nbins]
 
