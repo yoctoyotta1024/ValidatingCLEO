@@ -17,7 +17,7 @@ https://opensource.org/licenses/BSD-3-Clause
 -----
 File Description:
 Radius and xi generators as in Shima et al. 2009. File adapted from
-CLEO v0.39.5 examples/boxmodelcollisions/attrgens_shima2009.py
+CLEO v0.39.6 examples/boxmodelcollisions/attrgens_shima2009.py
 """
 
 

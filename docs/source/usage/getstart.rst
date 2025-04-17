@@ -27,12 +27,12 @@ which will be used when you try to commit something or you execute ``pre-commit 
 more about the powers of pre-commit from `their documentation <https://pre-commit.com>`_.
 
 For now, CLEO's python packages are not readily installable and so you will have to clone the
-CLEO repository to somewhere in your filesystem and checkout to CLEO version v0.39.5:
+CLEO repository to somewhere in your filesystem and checkout to CLEO version v0.39.6:
 
 .. code-block:: console
 
   $ git clone https://github.com/yoctoyotta1024/CLEO.git
-  $ cd CLEO && git checkout -b v0.39.5
+  $ cd CLEO && git checkout -b v0.39.6
 
 That's it, you're done! Now maybe you want to compile and run one of the test cases in ``src/``.
 For example you could try out the :ref:`condensation/evaporation<condevap>` test case.
