@@ -32,7 +32,7 @@ def displacement(time, w_avg, thalf):
     return z
 
 
-def plot_one_dataset(path2pySD, axs, gridfile, dataset, setupfile, do_plotkohler):
+def plot_one_dataset(path2pySD, axs, grid_filename, dataset, setupfile, do_plotkohler):
     ### imports
     import sys
     import numpy as np
@@ -57,7 +57,7 @@ def plot_one_dataset(path2pySD, axs, gridfile, dataset, setupfile, do_plotkohler
     ### load data
     config = pysetuptxt.get_config(setupfile, nattrs=3, isprint=True)
     consts = pysetuptxt.get_consts(setupfile, isprint=True)
-    gbxs = pygbxsdat.get_gridboxes(gridfile, consts["COORD0"], isprint=True)
+    gbxs = pygbxsdat.get_gridboxes(grid_filename, consts["COORD0"], isprint=True)
     time = pyzarr.get_time(dataset).secs
     zprof = displacement(time, config["W_avg"], config["TAU_half"])
     thermo = pyzarr.get_thermodata(dataset, config["ntime"], gbxs["ndims"], consts)
@@ -122,7 +122,7 @@ def plot_one_dataset(path2pySD, axs, gridfile, dataset, setupfile, do_plotkohler
     return lines
 
 
-def plot_results(path2pySD, gridfile, datasets, setups):
+def plot_results(path2pySD, grid_filename, datasets, setups):
     import matplotlib.pyplot as plt
 
     fig, axes = plt.subplots(nrows=3, ncols=3, figsize=(13, 19))
@@ -136,7 +136,7 @@ def plot_results(path2pySD, gridfile, datasets, setups):
         if r % 3 == 0:
             do_plotkohler = True
         l1s = plot_one_dataset(
-            path2pySD, axs, gridfile, dataset, setupfile, do_plotkohler
+            path2pySD, axs, grid_filename, dataset, setupfile, do_plotkohler
         )
         if r < 3:
             handles.append(l1s[0])
