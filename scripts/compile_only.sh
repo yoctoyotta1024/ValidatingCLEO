@@ -26,12 +26,13 @@ spack unload --all
 executables=${1:-"NONE"}                                        # executable(s) to compile
 buildtype=${2:-serial}                                          # "serial", "threads", "openmp" or "cuda"
 compilername=${3:-intel}                                        # "intel" or "gcc"
-path2src=${4:-${HOME}/validating_cleo/src/}                     # must be absolute path
+path2src=${4:-${HOME}/validating_cleo/src}                     # must be absolute path
 path2build=${5:-/work/bm1183/m300950/validating_cleo/build}     # should be absolute path
 enableyac=${6:-false}                                           # == "true" or otherwise false
 make_clean=${7:-false}                                          # == "true" or otherwise false
 
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+SCRIPT_DIR=${path2src}/../scripts
+bashsrc=${SCRIPT_DIR}/cleo/levante/bash/src
 ### ---------------------------------------------------- ###
 
 ### -------------------- check inputs ------------------ ###

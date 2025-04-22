@@ -5,7 +5,7 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=128
 #SBATCH --mem=940M
-#SBATCH --time=00:15:00
+#SBATCH --time=04:00:00
 #SBATCH --mail-user=clara.bayley@mpimet.mpg.de
 #SBATCH --mail-type=FAIL
 #SBATCH --account=bm1183
@@ -19,8 +19,8 @@
 path2build=${1:-/work/bm1183/m300950/validating_cleo/build}     # should be absolute path
 buildtype=${2:-openmp}                                          # "serial", "threads", "openmp" or "cuda"
 
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-runscript=${SCRIPT_DIR}/../run.sh
+SCRIPT_DIR=/home/m/m300950/validating_cleo/scripts
+runscript=${SCRIPT_DIR}/run.sh
 ### ---------------------------------------------------- ###
 
 ### -------------- run golovin executable -------------- ###
