@@ -9,7 +9,7 @@ Created Date: Wednesday 16th April 2025
 Author: Clara Bayley (CB)
 Additional Contributors:
 -----
-Last Modified: Wednesday 16th April 2025
+Last Modified: Wednesday 23rd April 2025
 Modified By: CB
 -----
 License: BSD 3-Clause "New" or "Revised" License
@@ -177,7 +177,7 @@ def plot_results(path2pySD, grid_filename, datasets, setups):
     ### plot long and testikstraub datasets version 1
     times2plot = [0, 600, 1200, 1800]
     datasets2plot = [datasets[2], datasets[4], datasets[3], datasets[5]]
-    setups2plot = [setups[2], setups[3], setups[4], setups[5]]
+    setups2plot = [setups[2], setups[4], setups[3], setups[5]]
     kernellabels = ["Long 1974", "Testik 2011 + Straub 2010"] * 2
     plot_massdendistrib_evolution(
         path2pySD,
@@ -192,7 +192,7 @@ def plot_results(path2pySD, grid_filename, datasets, setups):
     ### plot long and testikstraub datasets version 2
     times2plot = [0, 1200, 2400, 3600]
     datasets2plot = [datasets[6], datasets[8], datasets[7], datasets[9]]
-    setups2plot = [setups[6], setups[7], setups[8], setups[9]]
+    setups2plot = [setups[6], setups[8], setups[7], setups[9]]
     kernellabels = ["Long 1974", "Testik 2011 + Straub 2010"] * 2
     plot_massdendistrib_evolution(
         path2pySD,
