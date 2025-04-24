@@ -15,7 +15,7 @@ set(exec colls_golovin)
 add_executable(${exec} EXCLUDE_FROM_ALL "main_golovin.cpp")
 
 # Add directories and link libraries to target
-target_link_libraries(${exec} PRIVATE coupldyn_cvode cartesiandomain "${CLEOLIBS}")
+target_link_libraries(${exec} PRIVATE cartesiandomain "${CLEOLIBS}")
 target_link_libraries(${exec} PUBLIC Kokkos::kokkos)
 target_include_directories(${exec} PRIVATE "${CLEO_SOURCE_DIR}/libs") # CLEO libs directory
 
@@ -33,7 +33,7 @@ set(exec colls_long)
 add_executable(${exec} EXCLUDE_FROM_ALL "main_long.cpp")
 
 # Add directories and link libraries to target
-target_link_libraries(${exec} PRIVATE coupldyn_cvode cartesiandomain "${CLEOLIBS}")
+target_link_libraries(${exec} PRIVATE cartesiandomain "${CLEOLIBS}")
 target_link_libraries(${exec} PUBLIC Kokkos::kokkos)
 target_include_directories(${exec} PRIVATE "${CLEO_SOURCE_DIR}/libs") # CLEO libs directory
 
@@ -51,7 +51,7 @@ set(exec colls_testikstraub)
 add_executable(${exec} EXCLUDE_FROM_ALL "main_testikstraub.cpp")
 
 # Add directories and link libraries to target
-target_link_libraries(${exec} PRIVATE coupldyn_cvode cartesiandomain "${CLEOLIBS}")
+target_link_libraries(${exec} PRIVATE cartesiandomain "${CLEOLIBS}")
 target_link_libraries(${exec} PUBLIC Kokkos::kokkos)
 target_include_directories(${exec} PRIVATE "${CLEO_SOURCE_DIR}/libs") # CLEO libs directory
 
