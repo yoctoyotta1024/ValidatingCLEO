@@ -9,7 +9,7 @@
  * Author: Clara Bayley (CB)
  * Additional Contributors:
  * -----
- * Last Modified: Wednesday 16th April 2025
+ * Last Modified: Thursday 24th April 2025
  * Modified By: CB
  * -----
  * License: BSD 3-Clause "New" or "Revised" License
@@ -106,12 +106,6 @@ inline Observer auto create_superdrops_observer(const unsigned int interval,
   return SuperdropsObserver(interval, dataset, maxchunk, collect_sddata);
 }
 
-/* ---------------------------------------------------------------- */
-/* (!) Choose observer for output or not (!)
- * To output data comment out create_observer(...){return NullObserver{};}
- * and uncomment observer which returns "obsX >> obsY >> ... >> obsZ;"
- */
-
 template <typename Store>
 inline Observer auto create_observer(const Config &config,
                                      const Timesteps &tsteps,
@@ -135,7 +129,6 @@ inline Observer auto create_observer(const Config &config,
 
   return obs5 >> obs4 >> obs3 >> obs2 >> obs1;
 }
-/* ---------------------------------------------------------------- */
 
 template <typename Store>
 inline auto create_sdm(const Config &config, const Timesteps &tsteps,
