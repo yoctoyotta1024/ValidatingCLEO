@@ -9,7 +9,7 @@ Created Date: Wednesday 16th April 2025
 Author: Clara Bayley (CB)
 Additional Contributors:
 -----
-Last Modified: Wednesday 16th April 2025
+Last Modified: Thursday 24th April 2025
 Modified By: CB
 -----
 License: BSD 3-Clause "New" or "Revised" License
@@ -56,10 +56,5 @@ if __name__ == "__main__":
         "path4figs", type=Path, help="Absolute path for directory to save plots in"
     )
     args = parser.parse_args()
-
-    path2CLEO = args.path2CLEO
-    grid_filename = args.grid_filename
-    path2bin = args.path2bin
-    path4figs = args.path4figs
 
     main(args.path2CLEO, args.grid_filename, args.path2bin, args.path4figs)
