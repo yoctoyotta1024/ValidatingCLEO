@@ -6,7 +6,7 @@
 #SBATCH --cpus-per-task=128
 #SBATCH --gpus-per-task=1
 #SBATCH --mem=940M
-#SBATCH --time=00:05:00
+#SBATCH --time=08:00:00
 #SBATCH --mail-user=clara.bayley@mpimet.mpg.de
 #SBATCH --mail-type=FAIL
 #SBATCH --account=bm1183
@@ -31,7 +31,7 @@ configfile=${4:-${path2build}/tmp/condevap/config.yaml}         # configuration 
 enableyac=${5:-false}                                           # == "true" or otherwise false
 stacksize_limit=${6:-204800}                                    # ulimit -s [stacksize_limit] (kB)
 
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+SCRIPT_DIR=/home/m/m300950/validating_cleo/scripts
 bashsrc=${SCRIPT_DIR}/cleo/levante/bash/src
 ### ---------------------------------------------------- ###
 

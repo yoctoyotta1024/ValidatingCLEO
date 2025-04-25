@@ -4,20 +4,20 @@ Copyright (c) 2025 MPI-M, Clara Bayley
 
 ----- ValidatingCLEO -----
 File: plot_results.py
-Project: collisions
-Created Date: Wednesday 16th April 2025
+Project: motion
+Created Date: Thursday 24th April 2025
 Author: Clara Bayley (CB)
 Additional Contributors:
 -----
-Last Modified: Thursday 24th April 2025
+Last Modified: Friday 25th April 2025
 Modified By: CB
 -----
 License: BSD 3-Clause "New" or "Revised" License
 https://opensource.org/licenses/BSD-3-Clause
 -----
 File Description:
-Script to plot figure 2 of Shima et al. 2009 using results from CLEO
-0-D collisions-only box model.
+Source files to plot SD (as tracers) motion in flow similar to figure 1 of
+Arabas et a. 2015 2-D model
 """
 
 
@@ -25,20 +25,20 @@ import argparse
 import sys
 from pathlib import Path
 
-# for imports from collisions src module
+# for imports from motion src module
 sys.path.append(str(Path(__file__).resolve().parents[2] / "src"))
-import collisions.plot_results as collsplt
+import motion.plot_results as mtnplt
 
 
-def main(path2CLEO, grid_filename, path2bin, path4figs):
+def main(path2CLEO, path2bin, path4figs):
     datasets = {}
     setups = {}
-    for r in range(10):
+    for r in range(3):
         datasets[r] = path2bin / f"sol_{r}.zarr"
         setups[r] = path2bin / f"setup_{r}.txt"
 
-    fig, axes = collsplt.plot_results(path2CLEO, grid_filename, datasets, setups)
-    savename = path4figs / "shima_2009.png"
+    fig, axes = mtnplt.plot_results(path2CLEO, datasets, setups)
+    savename = path4figs / "arabas_2015.png"
     fig.savefig(savename, dpi=400, bbox_inches="tight", facecolor="w")
     print("Figure .png saved as: " + str(savename))
 
@@ -47,9 +47,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("path2CLEO", type=Path, help="Absolute path of CLEO (for pySD)")
     parser.add_argument(
-        "grid_filename", type=Path, help="Absolute path of .dat grid file"
-    )
-    parser.add_argument(
         "path2bin", type=Path, help="Absolute path to dataset and setup files"
     )
     parser.add_argument(
@@ -57,4 +54,4 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    main(args.path2CLEO, args.grid_filename, args.path2bin, args.path4figs)
+    main(args.path2CLEO, args.path2bin, args.path4figs)

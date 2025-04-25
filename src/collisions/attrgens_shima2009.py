@@ -9,7 +9,7 @@ Created Date: Wednesday 16th April 2025
 Author: Clara Bayley (CB)
 Additional Contributors:
 -----
-Last Modified: Thursday 17th April 2025
+Last Modified: Tuesday 22nd April 2025
 Modified By: CB
 -----
 License: BSD 3-Clause "New" or "Revised" License
@@ -17,7 +17,7 @@ https://opensource.org/licenses/BSD-3-Clause
 -----
 File Description:
 Radius and xi generators as in Shima et al. 2009. File adapted from
-CLEO v0.39.6 examples/boxmodelcollisions/attrgens_shima2009.py
+CLEO v0.39.7 examples/boxmodelcollisions/attrgens_shima2009.py
 """
 
 

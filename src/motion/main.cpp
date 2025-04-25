@@ -4,8 +4,8 @@
  *
  * ----- ValidatingCLEO -----
  * File: main.cpp
- * Project: condevap
- * Created Date: Friday 11th April 2025
+ * Project: motion
+ * Created Date: Thursday 24th April 2025
  * Author: Clara Bayley (CB)
  * Additional Contributors:
  * -----
@@ -16,8 +16,7 @@
  * https://opensource.org/licenses/BSD-3-Clause
  * -----
  * File Description:
- * Program for CLEO 0-D box model of conensation/evaporation as in
- * S. Arabas and S. Shima 2017
+ * Program for CLEO 2-D model of motion similar to Arabas et al. 2015
  */
 
 #include <Kokkos_Core.hpp>
@@ -28,19 +27,19 @@
 #include "zarr/dataset.hpp"
 #include "cartesiandomain/cartesianmaps.hpp"
 #include "cartesiandomain/createcartesianmaps.hpp"
+#include "cartesiandomain/movement/cartesian_motion.hpp"
 #include "cartesiandomain/movement/cartesian_movement.hpp"
-#include "coupldyn_cvode/cvodecomms.hpp"
-#include "coupldyn_cvode/cvodedynamics.hpp"
-#include "coupldyn_cvode/initgbxs_cvode.hpp"
+#include "coupldyn_fromfile/fromfile_cartesian_dynamics.hpp"
+#include "coupldyn_fromfile/fromfilecomms.hpp"
 #include "gridboxes/boundary_conditions.hpp"
 #include "gridboxes/gridboxmaps.hpp"
 #include "initialise/config.hpp"
 #include "initialise/init_all_supers_from_binary.hpp"
+#include "initialise/initgbxsnull.hpp"
 #include "initialise/initialconditions.hpp"
 #include "initialise/timesteps.hpp"
 #include "observers/gbxindex_observer.hpp"
 #include "observers/observers.hpp"
-#include "observers/state_observer.hpp"
 #include "observers/streamout_observer.hpp"
 #include "observers/superdrops_observer.hpp"
 #include "observers/time_observer.hpp"
@@ -48,15 +47,21 @@
 #include "runcleo/couplingcomms.hpp"
 #include "runcleo/runcleo.hpp"
 #include "runcleo/sdmmethods.hpp"
-#include "superdrops/condensation.hpp"
 #include "superdrops/microphysicalprocess.hpp"
 #include "superdrops/motion.hpp"
 #include "zarr/fsstore.hpp"
 
 inline CoupledDynamics auto create_coupldyn(const Config &config,
-                                            const unsigned int couplstep) {
-  return CvodeDynamics(config.get_cvodedynamics(), couplstep,
-                       &step2dimlesstime);
+                                            const CartesianMaps &gbxmaps,
+                                            const unsigned int couplstep,
+                                            const unsigned int t_end) {
+  const auto h_ndims = gbxmaps.get_global_ndims_hostcopy();
+  const std::array<size_t, 3> ndims({h_ndims(0), h_ndims(1), h_ndims(2)});
+
+  const auto nsteps = (unsigned int)(std::ceil(t_end / couplstep) + 1);
+
+  return FromFileDynamics(config.get_fromfiledynamics(), couplstep, ndims,
+                          nsteps);
 }
 
 template <GridboxMaps GbxMaps>
@@ -64,7 +69,7 @@ inline InitialConditions auto create_initconds(const Config &config,
                                                const GbxMaps &gbxmaps) {
   const auto initsupers =
       InitAllSupersFromBinary(config.get_initsupersfrombinary());
-  const auto initgbxs = InitGbxsCvode(config.get_cvodedynamics());
+  const auto initgbxs = InitGbxsNull(gbxmaps.get_local_ngridboxes_hostcopy());
 
   return InitConds(initsupers, initgbxs);
 }
@@ -75,8 +80,12 @@ inline GridboxMaps auto create_gbxmaps(const Config &config) {
   return gbxmaps;
 }
 
-inline auto create_movement(const CartesianMaps &gbxmaps) {
-  const Motion<CartesianMaps> auto motion = NullMotion{};
+inline auto create_movement(const unsigned int motionstep,
+                            const CartesianMaps &gbxmaps) {
+  const auto terminalv = NullTerminalVelocity{};
+  const Motion<CartesianMaps> auto motion =
+      CartesianMotion(motionstep, &step2dimlesstime, terminalv);
+
   const BoundaryConditions<CartesianMaps> auto boundary_conditions =
       NullBoundaryConditions{};
 
@@ -85,10 +94,7 @@ inline auto create_movement(const CartesianMaps &gbxmaps) {
 
 inline MicrophysicalProcess auto create_microphysics(const Config &config,
                                                      const Timesteps &tsteps) {
-  const auto c = config.get_condensation();
-  return Condensation(tsteps.get_condstep(), &step2dimlesstime,
-                      c.do_alter_thermo, c.maxniters, c.rtol, c.atol,
-                      c.MINSUBTSTEP, &realtime2dimless);
+  return NullMicrophysicalProcess{};
 }
 
 template <typename Store>
@@ -98,11 +104,10 @@ inline Observer auto create_superdrops_observer(const unsigned int interval,
   CollectDataForDataset<Store> auto sdid = CollectSdId(dataset, maxchunk);
   CollectDataForDataset<Store> auto sdgbxindex =
       CollectSdgbxindex(dataset, maxchunk);
-  CollectDataForDataset<Store> auto xi = CollectXi(dataset, maxchunk);
-  CollectDataForDataset<Store> auto radius = CollectRadius(dataset, maxchunk);
-  CollectDataForDataset<Store> auto msol = CollectMsol(dataset, maxchunk);
+  CollectDataForDataset<Store> auto coord3 = CollectCoord3(dataset, maxchunk);
+  CollectDataForDataset<Store> auto coord1 = CollectCoord1(dataset, maxchunk);
 
-  const auto collect_sddata = msol >> radius >> xi >> sdgbxindex >> sdid;
+  const auto collect_sddata = coord1 >> coord3 >> sdgbxindex >> sdid;
   return SuperdropsObserver(interval, dataset, maxchunk, collect_sddata);
 }
 
@@ -112,22 +117,16 @@ inline Observer auto create_observer(const Config &config,
                                      Dataset<Store> &dataset) {
   const auto obsstep = tsteps.get_obsstep();
   const auto maxchunk = config.get_maxchunk();
-  const auto ngbxs = config.get_ngbxs();
 
-  const Observer auto obs1 = StreamOutObserver(obsstep * 10, &step2realtime);
+  const Observer auto obs0 = StreamOutObserver(obsstep, &step2realtime);
 
-  const Observer auto obs2 =
+  const Observer auto obs1 =
       TimeObserver(obsstep, dataset, maxchunk, &step2dimlesstime);
 
-  const Observer auto obs3 = GbxindexObserver(dataset, maxchunk, ngbxs);
-
-  const Observer auto obs4 = StateObserver(obsstep, dataset, maxchunk,
-  ngbxs);
-
-  const Observer auto obs5 =
+  const Observer auto obssd =
       create_superdrops_observer(obsstep, dataset, maxchunk);
 
-  return obs5 >> obs4 >> obs3 >> obs2 >> obs1;
+  return obssd >> obs1 >> obs0;
 }
 
 template <typename Store>
@@ -137,7 +136,8 @@ inline auto create_sdm(const Config &config, const Timesteps &tsteps,
   const GridboxMaps auto gbxmaps = create_gbxmaps(config);
   const MicrophysicalProcess auto microphys =
       create_microphysics(config, tsteps);
-  const MoveSupersInDomain movesupers = create_movement(gbxmaps);
+  const MoveSupersInDomain movesupers =
+      create_movement(tsteps.get_motionstep(), gbxmaps);
   const Observer auto obs = create_observer(config, tsteps, dataset);
 
   return SDMMethods(couplstep, gbxmaps, microphys, movesupers, obs);
@@ -179,10 +179,13 @@ int main(int argc, char *argv[]) {
     /* CLEO Super-Droplet Model (excluding coupled dynamics solver) */
     const SDMMethods sdm(create_sdm(config, tsteps, dataset));
 
-    /* Create coupldyn solver and coupling between coupldyn and SDM */
-    CoupledDynamics auto coupldyn(
-        create_coupldyn(config, tsteps.get_couplstep()));
-    const CouplingComms<CartesianMaps, CvodeDynamics> auto comms = CvodeComms{};
+    /* Solver of dynamics coupled to CLEO SDM */
+    CoupledDynamics auto coupldyn(create_coupldyn(
+        config, sdm.gbxmaps, tsteps.get_couplstep(), tsteps.get_t_end()));
+
+    /* coupling between coupldyn and SDM */
+    const CouplingComms<CartesianMaps, FromFileDynamics> auto comms =
+        FromFileComms{};
 
     /* Initial conditions for CLEO run */
     const InitialConditions auto initconds =

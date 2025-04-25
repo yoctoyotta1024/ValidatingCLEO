@@ -30,3 +30,4 @@ message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 # add directories of from src
 add_subdirectory(condevap EXCLUDE_FROM_ALL)
 add_subdirectory(collisions EXCLUDE_FROM_ALL)
+add_subdirectory(motion EXCLUDE_FROM_ALL)
