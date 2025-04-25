@@ -2,6 +2,30 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.4.0](https://github.com/yoctoyotta1024/ValidatingCLEO/compare/00adb435122f6fd8e1cfa98fdc9723d5690b0eb9..v0.4.0) - 2025-04-25
+#### Bug Fixes
+- wrong order of setups - ([5827771](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/582777174b8d7574eb4d27b06b7bba1ce040421c)) - clara.bayley
+- sbatch-able paths in scripts - ([b4e77d5](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/b4e77d51da795e098c4ff7354c4223adc645bf04)) - clara.bayley
+#### Documentation
+- document describing motion 2-D test-case - ([7234cb1](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/7234cb1017d2daba3b84722bf972d933e98d1ce2)) - clara.bayley
+#### Features
+- plotting script for 2d motion test case - ([b0d6a6c](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/b0d6a6c9b8efefcce99ba88f6a396e0e2848add8)) - clara.bayley
+- source files for 2-D motion test case - ([d287973](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/d2879734838f7e7f0995600f4f3b668e2fb009bd)) - clara.bayley
+- scripts to run motion 2-D test case - ([0e6dfba](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/0e6dfba32a5f45c1cfb548e51f2cb973c5f1412c)) - clara.bayley
+#### Miscellaneous Chores
+- update CLEO version for bug fixes: - ([fc5d130](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/fc5d130e89b9514067a8ba60fb993a398be94093)) - clara.bayley
+- update CLEO version - ([81b7d88](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/81b7d88f7d403f0081249c2bfb7b3583071ababe)) - clara.bayley
+- update CLEO version - ([00adb43](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/00adb435122f6fd8e1cfa98fdc9723d5690b0eb9)) - clara.bayley
+#### Performance Improvements
+- delete unused variables - ([064b387](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/064b3871add86045f30344dea3775b41c5f3f2b5)) - clara.bayley
+- don't include cvode unneeded - ([4b2e89a](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/4b2e89a34dc13fbee01c972453b43180a9b97a59)) - clara.bayley
+- remove unneeded comment - ([11a7916](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/11a7916434f9bba666d5ecec7c78d8e00ee64255)) - clara.bayley
+#### Refactoring
+- print total water mass as sanity check on distribution for collisions - ([06d16e8](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/06d16e8c3465ee44f76d5985859013f8df693950)) - clara.bayley
+- remove rspan from initial collisions conditions - ([5408b26](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/5408b26908f583ac865fc9cebfebfd059b51ff65)) - clara.bayley
+
+- - -
+
 ## [v0.3.0](https://github.com/yoctoyotta1024/ValidatingCLEO/compare/a8ac779a9a7e605bfdb41df18aa102d82cdf6217..v0.3.0) - 2025-04-17
 #### Bug Fixes
 - correct name and range of plotting script - ([4591115](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/4591115dfc346cfd37bec030d72545b98f5ac40b)) - clara.bayley
