@@ -64,7 +64,7 @@ def plot_superdroplet_sample_2dmotion(fig, ax, time, sdsample, cax=None):
     import matplotlib.pyplot as plt
     from matplotlib.cm import ScalarMappable
 
-    cmap = "YlOrBr"  # for superdroplet radii
+    cmap = "YlGnBu"  # for superdroplet radii
     cmap_norm = plt.Normalize(vmin=0, vmax=60)
     c = np.repeat(time.mins, (sdsample["coord3"].shape)[1])
 
@@ -86,8 +86,8 @@ def plot_superdroplet_sample_2dmotion(fig, ax, time, sdsample, cax=None):
         s=0.001,
     )
     ax.set_aspect("equal")
-    ax.set_xlabel("x /m")
-    ax.set_ylabel("z /m")
+    ax.set_xlabel("$x$ / m")
+    ax.set_ylabel("$z$ / m")
     ax.set_xlim([0, 1500])
     ax.set_ylim([0, 1500])
     ax.set_xticks([0, 750, 1500])
@@ -103,15 +103,17 @@ def plot_results(path2pySD, datasets, setups):
     sys.path.append(str(path2pySD))
     from pySD.sdmout_src import pyzarr, pysetuptxt
 
-    fig = plt.figure(figsize=(4, 10))
+    fig = plt.figure(figsize=(4, 10.5))  # (3, 8) fits well
     gs = GridSpec(4, 1, figure=fig, height_ratios=[1] + [23] * 3)
     cax = fig.add_subplot(gs[0, :])
 
     axes = [cax]
+    resolutions = [100, 50, 25]
     for r in range(3):
         ax = fig.add_subplot(gs[r + 1, :])
         dataset = datasets[r]
         setupfile = setups[r]
+        res = resolutions[r]
 
         ### read in constants and intial setup from setup .txt file
         consts = pysetuptxt.get_consts(setupfile, isprint=True)
@@ -128,6 +130,10 @@ def plot_results(path2pySD, datasets, setups):
         )
 
         plot_superdroplet_sample_2dmotion(fig, ax, time, sdsample, cax=cax)
+        t = ax.text(
+            1500, 1350, f"$\u0394 x = \u0394 z = {res}$ m", color="k", ha="right"
+        )
+        t.set_bbox(dict(facecolor="w", alpha=0.75, linewidth=0))
         axes.append(ax)
         cax = None  # only plot cax once
 
