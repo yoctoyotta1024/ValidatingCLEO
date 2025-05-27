@@ -228,7 +228,7 @@ def plot_results(path2pySD, grid_filename, datasets, setups):
         ax.spines[["top", "right"]].set_visible(False)
     axes[2].set_xlim([3, 5000])
     axes[2].set_xticks([10, 100, 1000])
-    ylab = "mass density distribution / g m$^{-3}$ ln$(R$ / 1 unit$)^{-1}$"
+    ylab = "mass density distribution / g m$^{-3}$ / $\u0394$ln($R$)"
     axes[1].set_ylabel(ylab)
 
     fig.tight_layout()
