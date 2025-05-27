@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.4.1](https://github.com/yoctoyotta1024/ValidatingCLEO/compare/0fb8c23a63331656457ab8465da85f09ab6e1685..v0.4.1) - 2025-05-27
+#### Bug Fixes
+- correct axis label - ([ae33bf7](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/ae33bf7286e7c363cee83f8a640ae50daf99ed05)) - clara.bayley
+#### Refactoring
+- beautify plots for motion test case - ([86072d0](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/86072d012c2894beba7fbd6481c4f3ea5b508003)) - clara.bayley
+- beautify labels on collisions plot - ([ba094d8](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/ba094d8f1a90b471a3475022f9bca0349c285584)) - clara.bayley
+- beautify labels on condensation/evaporation plot - ([0fb8c23](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/0fb8c23a63331656457ab8465da85f09ab6e1685)) - clara.bayley
+
+- - -
+
 ## [v0.4.0](https://github.com/yoctoyotta1024/ValidatingCLEO/compare/00adb435122f6fd8e1cfa98fdc9723d5690b0eb9..v0.4.0) - 2025-04-25
 #### Bug Fixes
 - wrong order of setups - ([5827771](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/582777174b8d7574eb4d27b06b7bba1ce040421c)) - clara.bayley
