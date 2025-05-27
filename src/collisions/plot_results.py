@@ -58,23 +58,33 @@ def plot_massdendistrib_evolution(
     ### kernel: line [label, style]
     lstyles = {
         "Golovin 1963": [
-            "G1963",
+            "Golovin",
             "-.",
         ],
         "Long 1974": [
-            "L1974",
+            "hydro.",
             "-",
         ],
         "Testik 2011 + Straub 2010": [
-            "T2011+S2010",
-            "--",
+            "incl. breakup",
+            (0, (1, 1)),  # densely dotted
         ],
     }
     ### nsupers: line width
     lwidths = {
         8192: 1.0,
         131072: 2.0,
-        2097152: 3.0,
+        2097152: 3.25,
+    }
+
+    ### time to plot: colour
+    colors = {
+        0: "midnightblue",
+        600: "royalblue",
+        1200: "darkviolet",
+        1800: "tab:red",
+        2400: "brown",
+        3600: "sandybrown",
     }
 
     khandles, klabels = [], []
@@ -105,8 +115,8 @@ def plot_massdendistrib_evolution(
         tcolors, tlabels = [], []
         for n, t2plt in enumerate(times2plot):
             ind = np.argmin(abs(time - t2plt))
-            tlab = "t = {:.0f}s".format(time[ind])
-            color = "C" + str(n)
+            tlab = "$t$ = {:.0f} s".format(time[ind])
+            color = colors[t2plt]
 
             sdgbxindex = sddata2plot["sdgbxindex"][n]
             radius = sddata2plot["radius"][n]
@@ -135,7 +145,7 @@ def plot_massdendistrib_evolution(
                     zorder=0,
                 )[0]
                 khandles.append(kline)
-                klabels.append(lstyles[kernel][0] + ", N$_{SD}$=" + str(nsupers))
+                klabels.append(lstyles[kernel][0] + r", $N$=" + str(nsupers))
 
             ax.plot(
                 hcens,
@@ -149,15 +159,15 @@ def plot_massdendistrib_evolution(
 
     y = 0.95
     for tlab, color in zip(tlabels, tcolors):
-        ax.text(0.03, y, tlab, transform=ax.transAxes, color=color)
+        ax.text(0.01, y, tlab, transform=ax.transAxes, color=color)
         y -= 0.055
-    ax.legend(handles=khandles, labels=klabels)
+    ax.legend(handles=khandles, labels=klabels, loc="center left")
 
 
 def plot_results(path2pySD, grid_filename, datasets, setups):
     import matplotlib.pyplot as plt
 
-    fig, axes = plt.subplots(nrows=3, ncols=1, figsize=(6, 12))
+    fig, axes = plt.subplots(nrows=3, ncols=1, figsize=(5.5, 11))
 
     ### plot golovin kernel datasets
     times2plot = [0, 1200, 2400, 3600]
@@ -176,9 +186,9 @@ def plot_results(path2pySD, grid_filename, datasets, setups):
 
     ### plot long and testikstraub datasets version 1
     times2plot = [0, 600, 1200, 1800]
-    datasets2plot = [datasets[2], datasets[4], datasets[3], datasets[5]]
-    setups2plot = [setups[2], setups[4], setups[3], setups[5]]
-    kernellabels = ["Long 1974", "Testik 2011 + Straub 2010"] * 2
+    datasets2plot = [datasets[2], datasets[3], datasets[4], datasets[5]]
+    setups2plot = [setups[2], setups[3], setups[4], setups[5]]
+    kernellabels = ["Long 1974"] * 2 + ["Testik 2011 + Straub 2010"] * 2
     plot_massdendistrib_evolution(
         path2pySD,
         axes[1],
@@ -191,9 +201,9 @@ def plot_results(path2pySD, grid_filename, datasets, setups):
 
     ### plot long and testikstraub datasets version 2
     times2plot = [0, 1200, 2400, 3600]
-    datasets2plot = [datasets[6], datasets[8], datasets[7], datasets[9]]
-    setups2plot = [setups[6], setups[8], setups[7], setups[9]]
-    kernellabels = ["Long 1974", "Testik 2011 + Straub 2010"] * 2
+    datasets2plot = [datasets[6], datasets[7], datasets[8], datasets[9]]
+    setups2plot = [setups[6], setups[7], setups[8], setups[9]]
+    kernellabels = ["Long 1974"] * 2 + ["Testik 2011 + Straub 2010"] * 2
     plot_massdendistrib_evolution(
         path2pySD,
         axes[2],
@@ -209,7 +219,7 @@ def plot_results(path2pySD, grid_filename, datasets, setups):
         ax.set_xscale("log")
         ax.set_xlim([10, 5000])
         ax.set_xticks([10, 100, 1000])
-        ax.set_xlabel("radius /\u03BCm")
+        ax.set_xlabel("R / \u03BCm")
 
         ax.set_ylim([0, 1.8])
         ax.set_yticks([0, 0.4, 0.8, 1.2, 1.6])
@@ -218,7 +228,8 @@ def plot_results(path2pySD, grid_filename, datasets, setups):
         ax.spines[["top", "right"]].set_visible(False)
     axes[2].set_xlim([3, 5000])
     axes[2].set_xticks([10, 100, 1000])
-    axes[1].set_ylabel("mass density distribution, g(lnR) /g m$^{-3}$ / unit lnR")
+    ylab = "mass density distribution / g m$^{-3}$ ln$(R$ / 1 unit$)^{-1}$"
+    axes[1].set_ylabel(ylab)
 
     fig.tight_layout()
 

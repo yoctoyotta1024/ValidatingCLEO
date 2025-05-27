@@ -70,7 +70,10 @@ def plot_one_dataset(path2pySD, axs, grid_filename, dataset, setupfile, do_plotk
 
     ### plot data
     w_avg = config["W_avg"] * 100
-    wlab = "<w> = {:.1f}".format(w_avg) + "cm s$^{-1}$"
+    if w_avg < 1.0:
+        wlab = r"$\left< w \right>$ = {:.1f}".format(w_avg) + " cm s$^{-1}$"
+    else:
+        wlab = r"$\left< w \right>$ = {:.0f}".format(w_avg) + " cm s$^{-1}$"
     lwdth = lwdths[w_avg]
     lines = as2017fig.condensation_validation_subplots(
         axs, time, sd2plot["radius"], supersat[:, 0, 0, 0], zprof, lwdth=lwdth, lab=wlab
@@ -94,11 +97,11 @@ def plot_one_dataset(path2pySD, axs, grid_filename, dataset, setupfile, do_plotk
     )  # 0th gbx's initial droplet xi
     numconc = np.sum(xi0) / volume  # initial number concentation in volume
     textlab = (
-        "N = "
+        r"$\mathrm{N}_{\mathrm{STP}}$ = "
         + str(numconc)
-        + "cm$^{-3}$\n"
-        + "r$_{dry}$ = "
-        + "{:.2g}\u03BCm\n".format(sd2plot["radius"][0])
+        + " cm$^{-3}$\n"
+        + r"r$_{\mathrm{d}}$ = "
+        + "{:.2g} \u03BCm\n".format(sd2plot["radius"][0])
     )
     axs[0].text(
         0.03, 0.95, "ascent /", transform=axs[0].transAxes, fontsize=16, color="k"
@@ -109,7 +112,7 @@ def plot_one_dataset(path2pySD, axs, grid_filename, dataset, setupfile, do_plotk
     axs[0].text(0.03, 0.80, textlab, transform=axs[0].transAxes, fontsize=16, color="k")
 
     axs[0].set_xlim([-1, 1])
-    axs[0].set_ylim([0, 160])
+    axs[0].set_ylim([0, 170])
     for ax in axs[1:]:
         ax.set_xlim([0.125, 15])
         ax.set_xscale("log")
@@ -143,8 +146,10 @@ def plot_results(path2pySD, grid_filename, datasets, setups):
             labels.append(l1s[0].get_label()[7:])
 
     ### add legends
-    axes[0, 0].legend(handles=handles, labels=labels, loc="lower right", fontsize=16)
-    axes[1, 0].legend(loc="upper left", fontsize=16)
+    axes[0, 0].legend(
+        handles=handles, labels=labels, loc=(0.25, 0.0), fontsize=16, frameon=False
+    )
+    axes[1, 0].legend(loc="upper left", fontsize=16, frameon=False)
 
     ### set ticks
     fsz = 16
@@ -157,8 +162,8 @@ def plot_results(path2pySD, grid_filename, datasets, setups):
         xticks = [-0.5, 0.0, 0.5]
         ax.set_xticks(xticks)
         ax.set_xticklabels(xticks, fontsize=fsz)
-        ax.set_xlabel("supersaturation %", fontsize=fsz)
-    axes[0, 0].set_ylabel("displacement /m", fontsize=fsz)
+        ax.set_xlabel("$S$ /%", fontsize=fsz)
+    axes[0, 0].set_ylabel("Displacement /m", fontsize=fsz)
     axes[0, 0].set_yticklabels(yticks, fontsize=fsz)
 
     for ax in axes[1, :]:
@@ -170,8 +175,8 @@ def plot_results(path2pySD, grid_filename, datasets, setups):
         xticks = [0.25, 1, 4, 8]
         ax.set_xticks(xticks)
         ax.set_xticklabels(xticks, fontsize=fsz)
-        ax.set_xlabel("wet radius /\u03BCm", fontsize=fsz)
-    axes[1, 0].set_ylabel("supersaturation %", fontsize=fsz)
+        ax.set_xlabel("$R$ /\u03BCm", fontsize=fsz)
+    axes[1, 0].set_ylabel("$S$ /%", fontsize=fsz)
     axes[1, 0].set_yticklabels(yticks, fontsize=fsz)
 
     for ax in axes[2, :]:
@@ -183,8 +188,8 @@ def plot_results(path2pySD, grid_filename, datasets, setups):
         xticks = [0.25, 1, 4, 8]
         ax.set_xticks(xticks)
         ax.set_xticklabels(xticks, fontsize=fsz)
-        ax.set_xlabel("wet radius /\u03BCm", fontsize=fsz)
-    axes[2, 0].set_ylabel("displacement /m", fontsize=fsz)
+        ax.set_xlabel("$R$ /\u03BCm", fontsize=fsz)
+    axes[2, 0].set_ylabel("Displacement /m", fontsize=fsz)
     axes[2, 0].set_yticklabels(yticks, fontsize=fsz)
 
     fig.tight_layout()
