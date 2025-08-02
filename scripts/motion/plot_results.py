@@ -9,7 +9,7 @@ Created Date: Thursday 24th April 2025
 Author: Clara Bayley (CB)
 Additional Contributors:
 -----
-Last Modified: Friday 25th April 2025
+Last Modified: Saturday 2nd August 2025
 Modified By: CB
 -----
 License: BSD 3-Clause "New" or "Revised" License
@@ -39,6 +39,11 @@ def main(path2CLEO, path2bin, path4figs):
 
     fig, axes = mtnplt.plot_results(path2CLEO, datasets, setups)
     savename = path4figs / "arabas_2015.png"
+    fig.savefig(savename, dpi=400, bbox_inches="tight", facecolor="w")
+    print("Figure .png saved as: " + str(savename))
+
+    fig, axes = mtnplt.plot_results_2(path2CLEO, datasets, setups)
+    savename = path4figs / "arabas_2015_divergence_pergbx.png"
     fig.savefig(savename, dpi=400, bbox_inches="tight", facecolor="w")
     print("Figure .png saved as: " + str(savename))
 
