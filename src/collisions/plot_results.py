@@ -9,7 +9,7 @@ Created Date: Wednesday 16th April 2025
 Author: Clara Bayley (CB)
 Additional Contributors:
 -----
-Last Modified: Wednesday 23rd April 2025
+Last Modified: Saturday 2nd August 2025
 Modified By: CB
 -----
 License: BSD 3-Clause "New" or "Revised" License
@@ -163,6 +163,38 @@ def plot_massdendistrib_evolution(
         y -= 0.055
     ax.legend(handles=khandles, labels=klabels, loc="center left")
 
+    return khandles, klabels
+
+
+def plot_golovin_analytical(path2pySD, ax, times2plot, leg=None):
+    import sys
+
+    sys.path.append(
+        str(path2pySD / "examples" / "exampleplotting")
+    )  # imports from example plots package
+    from plotssrc import shima2009fig
+
+    rspan = [10, 1e4]
+    nbins = 500
+    n_a = 2**23
+    r_a = 30.531e-06
+    rho_l = 998.203
+    for t in times2plot:
+        golsol, hcens = shima2009fig.golovin_analytical(
+            rspan,
+            t,
+            nbins,
+            n_a,
+            r_a,
+            rho_l,
+        )
+        handles = ax.plot(hcens, golsol, color="grey", linestyle="-", linewidth=0.8)
+    labels = ["Golovin, analytical"]
+    if leg is not None:
+        handles += leg[0]
+        labels += leg[1]
+    ax.legend(handles=handles, labels=labels, loc="upper right")
+
 
 def plot_results(path2pySD, grid_filename, datasets, setups):
     import matplotlib.pyplot as plt
@@ -174,7 +206,7 @@ def plot_results(path2pySD, grid_filename, datasets, setups):
     datasets2plot = [datasets[0], datasets[1]]
     setups2plot = [setups[0], setups[1]]
     kernellabels = ["Golovin 1963"] * 2
-    plot_massdendistrib_evolution(
+    khandles, klabels = plot_massdendistrib_evolution(
         path2pySD,
         axes[0],
         grid_filename,
@@ -183,6 +215,9 @@ def plot_results(path2pySD, grid_filename, datasets, setups):
         setups2plot,
         kernellabels,
     )
+
+    ### plot golovin kernel analytical solution
+    plot_golovin_analytical(path2pySD, axes[0], times2plot, leg=[khandles, klabels])
 
     ### plot long and testikstraub datasets version 1
     times2plot = [0, 600, 1200, 1800]
