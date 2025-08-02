@@ -9,7 +9,7 @@ Created Date: Thursday 24th April 2025
 Author: Clara Bayley (CB)
 Additional Contributors:
 -----
-Last Modified: Friday 25th April 2025
+Last Modified: Saturday 2nd August 2025
 Modified By: CB
 -----
 License: BSD 3-Clause "New" or "Revised" License
@@ -137,6 +137,35 @@ def plot_results(path2pySD, datasets, setups):
         axes.append(ax)
         cax = None  # only plot cax once
 
+    fig.tight_layout()
+
+    return fig, axes
+
+
+def plot_results_2(path2pySD, datasets, setups):
+    import awkward as ak
+    import matplotlib.pyplot as plt
+    import xarray as xr
+
+    fig, axes = plt.subplots(nrows=len(datasets), ncols=1, figsize=(5, 9))
+
+    resolutions = [100, 50, 25]
+    for r in range(3):
+        ax = axes[r]
+        res = resolutions[r]
+        ds = xr.open_dataset(datasets[r], engine="zarr")
+        sdgbxindex = ak.unflatten(ds.sdgbxindex.values, counts=ds.raggedcount.values)
+        for ii in range(ak.max(sdgbxindex)):
+            num = ak.count(sdgbxindex[sdgbxindex == ii], axis=1)
+            ax.plot(ds.time.values, num)
+
+        ax.set_xlabel("time / s")
+        ax.set_ylabel("number of superdroplets per gridbox")
+        t = ax.text(
+            1500, 1350, f"$\u0394 x = \u0394 z = {res}$ m", color="k", ha="right"
+        )
+        t.set_bbox(dict(facecolor="w", alpha=0.75, linewidth=0))
+        print(num)
     fig.tight_layout()
 
     return fig, axes
