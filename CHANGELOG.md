@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.5.0](https://github.com/yoctoyotta1024/ValidatingCLEO/compare/cf71d062f812e32286c329d185558c9bead01b0d..v0.5.0) - 2025-08-02
+#### Features
+- add analytical solution to golovin plot - ([89969cc](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/89969cc4c965697e6f6a510e590be181d1ad953a)) - clara.bayley
+- plot of nsupers per gbx for superdroplet motion - ([cf71d06](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/cf71d062f812e32286c329d185558c9bead01b0d)) - clara.bayley
+
+- - -
+
 ## [v0.4.1](https://github.com/yoctoyotta1024/ValidatingCLEO/compare/0fb8c23a63331656457ab8465da85f09ab6e1685..v0.4.1) - 2025-05-27
 #### Bug Fixes
 - correct axis label - ([ae33bf7](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/ae33bf7286e7c363cee83f8a640ae50daf99ed05)) - clara.bayley
