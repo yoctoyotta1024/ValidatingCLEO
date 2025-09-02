@@ -9,7 +9,7 @@ Created Date: Wednesday 16th April 2025
 Author: Clara Bayley (CB)
 Additional Contributors:
 -----
-Last Modified: Saturday 2nd August 2025
+Last Modified: Tuesday 2nd September 2025
 Modified By: CB
 -----
 License: BSD 3-Clause "New" or "Revised" License
@@ -46,14 +46,32 @@ def plot_massdendistrib(
 
 
 def plot_massdendistrib_evolution(
-    path2pySD, ax, grid_filename, times2plot, datasets2plot, setups2plot, kernellabels
+    path2pySD,
+    ax,
+    grid_filename,
+    times2plot,
+    datasets2plot,
+    setups2plot,
+    kernellabels,
+    lwidths,
 ):
     import sys
     import awkward as ak
     import numpy as np
+    import matplotlib.pyplot as plt
 
     sys.path.append(str(path2pySD))  # for imports from pySD package
     from pySD.sdmout_src import pyzarr, pysetuptxt, pygbxsdat, sdtracing
+
+    ### time to plot: colour
+    colors = {
+        0: "midnightblue",
+        600: "royalblue",
+        1200: "darkviolet",
+        1800: "tab:red",
+        2400: "brown",
+        3600: "sandybrown",
+    }
 
     ### kernel: line [label, style]
     lstyles = {
@@ -69,22 +87,6 @@ def plot_massdendistrib_evolution(
             "incl. breakup",
             (0, (1, 1)),  # densely dotted
         ],
-    }
-    ### nsupers: line width
-    lwidths = {
-        8192: 1.0,
-        131072: 2.0,
-        2097152: 3.25,
-    }
-
-    ### time to plot: colour
-    colors = {
-        0: "midnightblue",
-        600: "royalblue",
-        1200: "darkviolet",
-        1800: "tab:red",
-        2400: "brown",
-        3600: "sandybrown",
     }
 
     khandles, klabels = [], []
@@ -134,9 +136,10 @@ def plot_massdendistrib_evolution(
                 path2pySD, sdgbxindex, radius, xi, gbxs, sddata, nbins, rspan, smoothsig
             )
 
-            # for legend
             if n == 0:
-                kline = ax.plot(
+                # to get black label with correct linestyle for legend
+                fake_ax = plt.subplots()[1]
+                kline = fake_ax.plot(
                     hcens,
                     hist,
                     color="k",
@@ -145,7 +148,8 @@ def plot_massdendistrib_evolution(
                     zorder=0,
                 )[0]
                 khandles.append(kline)
-                klabels.append(lstyles[kernel][0] + r", $N$=" + str(nsupers))
+                klab = f"{lstyles[kernel][0]}\n$N$={nsupers}"
+                klabels.append(klab)
 
             ax.plot(
                 hcens,
@@ -157,11 +161,11 @@ def plot_massdendistrib_evolution(
             tcolors.append(color)
             tlabels.append(tlab)
 
-    y = 0.95
+    y = 0.75
     for tlab, color in zip(tlabels, tcolors):
-        ax.text(0.01, y, tlab, transform=ax.transAxes, color=color)
+        ax.text(0.02, y, tlab, transform=ax.transAxes, color=color)
         y -= 0.055
-    ax.legend(handles=khandles, labels=klabels, loc="center left")
+    ax.legend(handles=khandles, labels=klabels, loc=(0.92, 0.5))
 
     return khandles, klabels
 
@@ -189,17 +193,28 @@ def plot_golovin_analytical(path2pySD, ax, times2plot, leg=None):
             rho_l,
         )
         handles = ax.plot(hcens, golsol, color="grey", linestyle="-", linewidth=0.8)
-    labels = ["Golovin, analytical"]
+    labels = ["Golovin\nanalytical"]
     if leg is not None:
         handles += leg[0]
         labels += leg[1]
-    ax.legend(handles=handles, labels=labels, loc="upper right")
+    ax.legend(handles=handles, labels=labels, loc=(0.92, 0.5))
 
 
 def plot_results(path2pySD, grid_filename, datasets, setups):
+    import numpy as np
     import matplotlib.pyplot as plt
 
-    fig, axes = plt.subplots(nrows=3, ncols=1, figsize=(5.5, 11))
+    ### nsupers: line width
+    lwidths_1 = {
+        8192: 0.8,
+        131072: 2.0,
+    }
+    lwidths_2 = {
+        131072: 0.8,
+        2097152: 2.0,
+    }
+
+    fig, axes = plt.subplots(nrows=3, ncols=1, figsize=(6.8, 11.5))
 
     ### plot golovin kernel datasets
     times2plot = [0, 1200, 2400, 3600]
@@ -214,6 +229,7 @@ def plot_results(path2pySD, grid_filename, datasets, setups):
         datasets2plot,
         setups2plot,
         kernellabels,
+        lwidths_1,
     )
 
     ### plot golovin kernel analytical solution
@@ -232,6 +248,7 @@ def plot_results(path2pySD, grid_filename, datasets, setups):
         datasets2plot,
         setups2plot,
         kernellabels,
+        lwidths_1,
     )
 
     ### plot long and testikstraub datasets version 2
@@ -247,24 +264,33 @@ def plot_results(path2pySD, grid_filename, datasets, setups):
         datasets2plot,
         setups2plot,
         kernellabels,
+        lwidths_2,
     )
 
     ### beautify axes
     for ax in axes:
         ax.set_xscale("log")
+        ax.set_xlabel("")
+        ax.set_ylabel("")
+        ax.spines[["top", "right"]].set_visible(False)
+
+    for ax in [axes[0], axes[1]]:
         ax.set_xlim([10, 5000])
         ax.set_xticks([10, 100, 1000])
-        ax.set_xlabel("R / \u03BCm")
 
-        ax.set_ylim([0, 1.8])
-        ax.set_yticks([0, 0.4, 0.8, 1.2, 1.6])
-        axes[1].set_ylabel("")
+    for ax in [axes[1], axes[2]]:
+        ax.set_ylim([0, 2.8])
+        ax.set_yticks(np.arange(0.0, 2.8, 0.8))
 
-        ax.spines[["top", "right"]].set_visible(False)
-    axes[2].set_xlim([3, 5000])
-    axes[2].set_xticks([10, 100, 1000])
+    axes[0].set_ylim([0, 1.8])
+    axes[0].set_yticks(np.arange(0.0, 1.8, 0.4))
+
     ylab = "mass density distribution / g m$^{-3}$ / $\u0394$ln($R$)"
     axes[1].set_ylabel(ylab)
+
+    axes[2].set_xlim([3, 5000])
+    axes[2].set_xticks([10, 100, 1000])
+    axes[2].set_xlabel("R / \u03BCm")
 
     fig.tight_layout()
 
