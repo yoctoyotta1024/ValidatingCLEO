@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.6.0](https://github.com/yoctoyotta1024/ValidatingCLEO/compare/72d42990af6e4978204b1b83e0c75c0d78fe3e33..v0.6.0) - 2025-09-02
+#### Documentation
+- info on tested CLEO version - ([72d4299](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/72d42990af6e4978204b1b83e0c75c0d78fe3e33)) - clara.bayley
+#### Features
+- bump version control - ([89f86eb](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/89f86eb6b16d7d7333c57f658095ff4848f2d4db)) - clara.bayley
+#### Refactoring
+- beautify shima2009 plot - ([855e517](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/855e517afbd7414a08f11b2070df98079a87bf30)) - clara.bayley
+
+- - -
+
 ## [v0.5.0](https://github.com/yoctoyotta1024/ValidatingCLEO/compare/cf71d062f812e32286c329d185558c9bead01b0d..v0.5.0) - 2025-08-02
 #### Features
 - add analytical solution to golovin plot - ([89969cc](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/89969cc4c965697e6f6a510e590be181d1ad953a)) - clara.bayley
