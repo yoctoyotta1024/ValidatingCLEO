@@ -26,8 +26,8 @@ Finally install the pre-commit hooks:
 which will be used when you try to commit something or you execute ``pre-commit run``. You can learn
 more about the powers of pre-commit from `their documentation <https://pre-commit.com>`_.
 
-For now, CLEO's python packages are not readily installable and so you will have to clone the
-CLEO repository to somewhere in your filesystem and checkout to CLEO version v0.39.7:
+For this version of CLEO, CLEO's python packages are not readily installable and so you will have
+to clone the CLEO repository to somewhere in your filesystem and checkout to CLEO version v0.39.7:
 
 .. code-block:: console
 
