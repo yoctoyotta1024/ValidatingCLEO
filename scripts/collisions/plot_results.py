@@ -20,7 +20,7 @@ Script to plot figure 2 of Shima et al. 2009 using results from CLEO
 0-D collisions-only box model.
 """
 
-
+# %%
 import argparse
 import sys
 from pathlib import Path
@@ -28,6 +28,24 @@ from pathlib import Path
 # for imports from collisions src module
 sys.path.append(str(Path(__file__).resolve().parents[2] / "src"))
 import collisions.plot_results as collsplt
+import matplotlib.pyplot as plt
+
+# %% font sizes for beautifying plots
+SMALL_SIZE = 17
+MEDIUM_SIZE = 18
+BIG_SIZE = 20
+
+plt.rc("font", size=SMALL_SIZE)  # controls default text sizes
+plt.rc("axes", titlesize=BIG_SIZE)  # fontsize of the axes title
+plt.rc("axes", labelsize=BIG_SIZE)  # fontsize of the x and y labels
+plt.rc("xtick", labelsize=MEDIUM_SIZE)  # fontsize of the tick labels
+plt.rc("ytick", labelsize=MEDIUM_SIZE)  # fontsize of the tick labels
+plt.rc("legend", fontsize=SMALL_SIZE)  # legend fontsize
+plt.rc("figure", titlesize=BIG_SIZE)  # fontsize of the figure title
+# %%
+from importlib import reload
+
+reload(collsplt)
 
 
 def main(path2CLEO, grid_filename, path2bin, path4figs):
