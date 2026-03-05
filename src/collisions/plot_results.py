@@ -28,9 +28,9 @@ def plot_massdendistrib(
     import numpy as np
 
     sys.path.append(
-        str(path2pySD / "examples" / "exampleplotting")
+        str(path2pySD / "examples" / "exampleplotting" / "plotcleo")
     )  # imports from example plots package
-    from plotssrc import shima2009fig
+    from plotcleo import shima2009fig
 
     gbx2plt = 0  # plot 0th gridbox
     volume = gbxs["gbxvols"][0, 0, 0]  # assuming all gbxs have same volume [m^3]
@@ -61,7 +61,7 @@ def plot_massdendistrib_evolution(
     import matplotlib.pyplot as plt
 
     sys.path.append(str(path2pySD))  # for imports from pySD package
-    from pySD.sdmout_src import pyzarr, pysetuptxt, pygbxsdat, sdtracing
+    from cleopy.sdmout_src import pyzarr, pysetuptxt, pygbxsdat, sdtracing
 
     ### time to plot: colour
     colors = {
@@ -101,7 +101,7 @@ def plot_massdendistrib_evolution(
 
         smoothsig_factor = 0.62
         nsupers0 = np.sum(
-            np.where(sddata.sdgbxindex[0] == 0, 1, 0)
+            np.where(sddata.sdgbxindex()[0] == 0, 1, 0)
         )  # initial num superdrops in 0th gbx
         smoothsig = smoothsig_factor * (
             nsupers0 ** (-1 / 5)
@@ -117,7 +117,7 @@ def plot_massdendistrib_evolution(
         tcolors, tlabels = [], []
         for n, t2plt in enumerate(times2plot):
             ind = np.argmin(abs(time - t2plt))
-            tlab = "$t$ = {:.0f} s".format(time[ind])
+            tlab = "t = {:.0f} s".format(time[ind])
             color = colors[t2plt]
 
             sdgbxindex = sddata2plot["sdgbxindex"][n]
@@ -161,11 +161,11 @@ def plot_massdendistrib_evolution(
             tcolors.append(color)
             tlabels.append(tlab)
 
-    y = 0.75
+    y = 0.90
     for tlab, color in zip(tlabels, tcolors):
-        ax.text(0.02, y, tlab, transform=ax.transAxes, color=color)
-        y -= 0.055
-    ax.legend(handles=khandles, labels=klabels, loc=(0.92, 0.5))
+        ax.text(0.40, y, tlab, transform=ax.transAxes, color=color)
+        y -= 0.075
+    ax.legend(handles=khandles, labels=klabels, loc=(0.95, 0.2))
 
     return khandles, klabels
 
@@ -174,9 +174,9 @@ def plot_golovin_analytical(path2pySD, ax, times2plot, leg=None):
     import sys
 
     sys.path.append(
-        str(path2pySD / "examples" / "exampleplotting")
+        str(path2pySD / "examples" / "exampleplotting" / "plotcleo")
     )  # imports from example plots package
-    from plotssrc import shima2009fig
+    from plotcleo import shima2009fig
 
     rspan = [10, 1e4]
     nbins = 500
@@ -197,7 +197,7 @@ def plot_golovin_analytical(path2pySD, ax, times2plot, leg=None):
     if leg is not None:
         handles += leg[0]
         labels += leg[1]
-    ax.legend(handles=handles, labels=labels, loc=(0.92, 0.5))
+    ax.legend(handles=handles, labels=labels, loc=(0.95, 0.2))
 
 
 def plot_results(path2pySD, grid_filename, datasets, setups):
@@ -214,7 +214,7 @@ def plot_results(path2pySD, grid_filename, datasets, setups):
         2097152: 2.0,
     }
 
-    fig, axes = plt.subplots(nrows=3, ncols=1, figsize=(6.8, 11.5))
+    fig, axes = plt.subplots(nrows=3, ncols=1, figsize=(8, 13))
 
     ### plot golovin kernel datasets
     times2plot = [0, 1200, 2400, 3600]
@@ -292,6 +292,6 @@ def plot_results(path2pySD, grid_filename, datasets, setups):
     axes[2].set_xticks([10, 100, 1000])
     axes[2].set_xlabel("R / \u03BCm")
 
-    fig.tight_layout()
+    # fig.tight_layout()
 
     return fig, axes

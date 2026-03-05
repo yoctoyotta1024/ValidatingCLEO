@@ -101,7 +101,7 @@ def plot_results(path2pySD, datasets, setups):
     from matplotlib.gridspec import GridSpec
 
     sys.path.append(str(path2pySD))
-    from pySD.sdmout_src import pyzarr, pysetuptxt
+    from cleopy.sdmout_src import pyzarr, pysetuptxt
 
     fig = plt.figure(figsize=(4, 10.5))  # (3, 8) fits well
     gs = GridSpec(4, 1, figure=fig, height_ratios=[1] + [23] * 3)
