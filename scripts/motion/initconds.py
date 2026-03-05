@@ -19,7 +19,7 @@ File Description:
 Script generates input files for CLEO 2-D model similar to Arabas et al. 2015
 E.g. execute
 ``
-python ./scripts/motion/initconds.py ~/CLEO/ /work/bm1183/m300950/validating_cleo/build \
+python ./scripts/motion/initconds.py ~/CLEO/ /work/mh0731/m300950/validating_cleo/build \
         /home/m/m300950/validating_cleo/src/motion/config.yaml False False
 ``
 """

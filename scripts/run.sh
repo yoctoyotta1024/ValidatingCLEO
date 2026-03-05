@@ -8,7 +8,7 @@
 #SBATCH --time=08:00:00
 #SBATCH --mail-user=clara.bayley@mpimet.mpg.de
 #SBATCH --mail-type=FAIL
-#SBATCH --account=bm1183
+#SBATCH --account=mh0731
 #SBATCH --output=./run_out.%j.out
 #SBATCH --error=./run_err.%j.out
 
@@ -23,7 +23,7 @@ spack unload --all
 ### ----- You need to edit these lines to specify ------ ###
 ### ----- your build configuration and executables ----- ###
 ### ---------------------------------------------------- ###
-path2build=${1:-/work/bm1183/m300950/validating_cleo/build}     # should be absolute path
+path2build=${1:-/work/mh0731/m300950/validating_cleo/build}     # should be absolute path
 buildtype=${2:-serial}                                          # "serial", "threads", "openmp" or "cuda"
 executable2run=${3:-${path2build}/src/condevap/condevap}        # path to executable to run
 configfile=${4:-${path2build}/tmp/condevap/config.yaml}         # configuration to run

@@ -8,7 +8,7 @@
 #SBATCH --time=00:05:00
 #SBATCH --mail-user=clara.bayley@mpimet.mpg.de
 #SBATCH --mail-type=FAIL
-#SBATCH --account=bm1183
+#SBATCH --account=mh0731
 #SBATCH --output=./buildcompile_out.%j.out
 #SBATCH --error=./buildcompile_err.%j.out
 
@@ -26,12 +26,12 @@ spack unload --all
 buildtype=${1:-serial}                         # "serial", "threads", "openmp" or "cuda"
 compilername=${2:-intel}                       # "intel" or "gcc"
 path2src=${3:-${HOME}/validating_cleo/src}    # must be absolute path
-path2build=${4:-/work/bm1183/m300950/validating_cleo/build}  # should be absolute path
+path2build=${4:-/work/mh0731/m300950/validating_cleo/build}  # should be absolute path
 build_flags=${5:-"-DCLEO_COUPLED_DYNAMICS="""} # CLEO_BUILD_FLAGS
 executables=${6:-"NONE"}                       # list of executables to compile or "NONE"
 enabledebug=${7:-false}                        # == "true" or otherwise false
 enableyac=${8:-false}                          # == "true" or otherwise false
-yacyaxtroot=${9:-/work/bm1183/m300950/yacyaxt} # yac and yaxt in yacyaxtroot/yac and yacyaxtroot/yaxt
+yacyaxtroot=${9:-/work/mh0731/m300950/yacyaxt} # yac and yaxt in yacyaxtroot/yac and yacyaxtroot/yaxt
 make_clean=${10:-true}                         # == "true" or otherwise false
 
 SCRIPT_DIR=${path2src}/../scripts

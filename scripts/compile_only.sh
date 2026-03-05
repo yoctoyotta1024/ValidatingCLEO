@@ -8,7 +8,7 @@
 #SBATCH --time=00:05:00
 #SBATCH --mail-user=clara.bayley@mpimet.mpg.de
 #SBATCH --mail-type=FAIL
-#SBATCH --account=bm1183
+#SBATCH --account=mh0731
 #SBATCH --output=./compileonly_out.%j.out
 #SBATCH --error=./compileonly_err.%j.out
 
@@ -27,7 +27,7 @@ executables=${1:-"NONE"}                                        # executable(s) 
 buildtype=${2:-serial}                                          # "serial", "threads", "openmp" or "cuda"
 compilername=${3:-intel}                                        # "intel" or "gcc"
 path2src=${4:-${HOME}/validating_cleo/src}                     # must be absolute path
-path2build=${5:-/work/bm1183/m300950/validating_cleo/build}     # should be absolute path
+path2build=${5:-/work/mh0731/m300950/validating_cleo/build}     # should be absolute path
 enableyac=${6:-false}                                           # == "true" or otherwise false
 make_clean=${7:-false}                                          # == "true" or otherwise false
 

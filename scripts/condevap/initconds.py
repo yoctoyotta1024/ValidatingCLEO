@@ -20,7 +20,7 @@ Script generates input files for CLEO 0-D box model with
 mono-size droplet distribution as in S. Arabas and S. Shima 2017.
 E.g. execute
 ``
-python ./scripts/condevap/initconds.py ~/CLEO/ /work/bm1183/m300950/validating_cleo/build \
+python ./scripts/condevap/initconds.py ~/CLEO/ /work/mh0731/m300950/validating_cleo/build \
         /home/m/m300950/validating_cleo/src/condevap/config.yaml False False
 ``
 """
