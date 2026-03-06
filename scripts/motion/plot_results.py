@@ -38,14 +38,14 @@ def main(path2CLEO, path2bin, path4figs):
         setups[r] = path2bin / f"setup_{r}.txt"
 
     fig, axes = mtnplt.plot_results(path2CLEO, datasets, setups)
-    savename = path4figs / "arabas_2015.png"
+    savename = path4figs / "arabas_2015.pdf"
     fig.savefig(savename, dpi=400, bbox_inches="tight", facecolor="w")
-    print("Figure .png saved as: " + str(savename))
+    print("Figure .pdf saved as: " + str(savename))
 
     fig, axes = mtnplt.plot_results_2(path2CLEO, datasets, setups)
-    savename = path4figs / "arabas_2015_divergence_pergbx.png"
+    savename = path4figs / "arabas_2015_divergence_pergbx.pdf"
     fig.savefig(savename, dpi=400, bbox_inches="tight", facecolor="w")
-    print("Figure .png saved as: " + str(savename))
+    print("Figure .pdf saved as: " + str(savename))
 
 
 if __name__ == "__main__":
