@@ -100,7 +100,7 @@ def sample_for_motion_plot(path2pySD, dataset, consts):
     return time, sdsample
 
 
-def plot_superdroplet_sample_2dmotion(fig, ax, time, sdsample, cax=None):
+def plot_superdroplet_sample_2dmotion(fig, ax, time, sdsample, cax=None, topcbar=False):
     import numpy as np
     import matplotlib.pyplot as plt
     from matplotlib.cm import ScalarMappable
@@ -110,12 +110,15 @@ def plot_superdroplet_sample_2dmotion(fig, ax, time, sdsample, cax=None):
     c = np.repeat(time.mins, (sdsample["coord3"].shape)[1])
 
     if cax is not None:
-        fig.colorbar(
+        cbar = fig.colorbar(
             ScalarMappable(norm=cmap_norm, cmap=cmap),
             cax=cax,
             label="time /mins",
             orientation="horizontal",
         )
+        if topcbar:
+            cbar.ax.xaxis.set_ticks_position("top")
+            cbar.ax.xaxis.set_label_position("top")
 
     ax.scatter(
         sdsample["coord1"],
@@ -221,8 +224,80 @@ def plot_divergence_pergbx_figure(datasets):
     return fig, axes
 
 
+def plot_motion_and_divergence_figure(path2pySD, datasets, setups):
+    import sys
+    import matplotlib.pyplot as plt
+    import xarray as xr
+    from matplotlib.gridspec import GridSpec
+
+    sys.path.append(str(path2pySD))
+    from pySD.sdmout_src import pysetuptxt
+
+    fig = plt.figure(figsize=(10, 5))  # (3, 8) fits well
+    gs = GridSpec(
+        4,
+        5,
+        figure=fig,
+        width_ratios=[7, 1, 7, 1, 7],
+        height_ratios=[1, 23, 1, 12],
+        hspace=0.5,
+    )
+    cax = fig.add_subplot(gs[0, 1:4])
+
+    axes1 = []
+    for r in range(3):
+        ax = fig.add_subplot(gs[1, 2 * r])
+        axes1.append(ax)
+    axes1.append(cax)
+
+    axes2 = []
+    for r in range(3):
+        ax = fig.add_subplot(gs[3, 2 * r])
+        axes2.append(ax)
+    axes2.append(cax)
+
+    for r in range(3):
+        dataset = datasets[r]
+        setupfile = setups[r]
+        ds = xr.open_dataset(dataset, engine="zarr")
+        consts = pysetuptxt.get_consts(setupfile, isprint=True)
+
+        time, sdsample = sample_for_motion_plot(path2pySD, dataset, consts)
+        plot_superdroplet_sample_2dmotion(
+            fig, axes1[r], time, sdsample, cax=cax, topcbar=True
+        )
+        cax = None  # only plot cax once
+
+        plot_divergence_pergbx(axes2[r], ds)
+
+    resolutions = [100, 50, 25]
+    for r in range(3):
+        ax = axes1[r]
+        res = resolutions[r]
+        ax.set_aspect("equal")
+        ax.set_xlabel("$x$ / m")
+        ax.set_ylabel("$z$ / m")
+        ax.set_xlim([0, 1500])
+        ax.set_ylim([0, 1500])
+        ax.set_xticks([0, 750, 1500])
+        ax.set_yticks([0, 750, 1500])
+        ax.spines[["left", "right"]].set_visible(False)
+        ax.set_title(f"$\u0394 x = \u0394 z = {res}$ m")
+
+    for r in range(3):
+        ax = axes2[r]
+        res = resolutions[r]
+        ax.set_xlim(0, 3600)
+        ax.set_ylim(50, 200)
+        ax.spines[["right", "top"]].set_visible(False)
+        ax.set_xlabel("time / s")
+        ax.set_ylabel("$n_{\mathrm{s}}$")
+
+    return fig, [axes1, axes2]
+
+
 def plot_results(path2pySD, datasets, setups):
-    fig1 = None
+    fig1, _ = plot_motion_and_divergence_figure(path2pySD, datasets, setups)
 
     fig2, _ = plot_motion_figure(path2pySD, datasets, setups)
 

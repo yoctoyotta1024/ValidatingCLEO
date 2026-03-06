@@ -39,9 +39,9 @@ def main(path2CLEO, path2bin, path4figs):
 
     fig1, fig2, fig3 = mtnplt.plot_results(path2CLEO, datasets, setups)
 
-    # savename1 = path4figs / "arabas_2015_motion_with_divergence_pergbx.pdf"
-    # fig1.savefig(savename1, dpi=250, bbox_inches="tight", facecolor="w")
-    # print("Figure .pdf saved as: " + str(savename1))
+    savename1 = path4figs / "arabas_2015_motion_with_divergence_pergbx.png"
+    fig1.savefig(savename1, dpi=400, bbox_inches="tight", facecolor="w")
+    print("Figure .png saved as: " + str(savename1))
 
     savename2 = path4figs / "arabas_2015_motion.png"
     fig2.savefig(savename2, dpi=250, bbox_inches="tight", facecolor="w")
