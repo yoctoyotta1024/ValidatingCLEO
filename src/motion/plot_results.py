@@ -1,24 +1,3 @@
-'''
-Copyright (c) 2026 MPI-M, Clara Bayley
-
-
------ ValidatingCLEO -----
-File: plot_results.py
-Project: motion
-Created Date: Thursday 1st January 1970
-Author: Clara Bayley (CB)
-Additional Contributors:
------
-Last Modified: Friday 6th March 2026
-Modified By: CB
------
-License: BSD 3-Clause "New" or "Revised" License
-https://opensource.org/licenses/BSD-3-Clause
------
-File Description:
-'''
-
-
 """
 Copyright (c) 2025 MPI-M, Clara Bayley
 
@@ -30,7 +9,7 @@ Created Date: Thursday 24th April 2025
 Author: Clara Bayley (CB)
 Additional Contributors:
 -----
-Last Modified: Saturday 2nd August 2025
+Last Modified: Friday 6th March 2026
 Modified By: CB
 -----
 License: BSD 3-Clause "New" or "Revised" License
