@@ -27,6 +27,7 @@ python_initconds:
   supers:
     mono_radius: XXX                                          # monodisperse droplet radii [m]
     numconc: XXX                                              # total no. conc of real droplets [m^-3]
+    dry_radius: XXX                                           # dry radius of superdroplets (optional) [m]
 
 ### SDM Runtime Parameters ###
 domain:

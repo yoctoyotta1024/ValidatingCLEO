@@ -21,7 +21,7 @@ mono-size droplet distribution as in S. Arabas and S. Shima 2017.
 """
 
 
-def generate_configurations(path2pySD, path2build, original_config):
+def generate_configurations(path2pySD, path2build, original_config, is_vent_comparison):
     import shutil
     import sys
 
@@ -42,12 +42,25 @@ def generate_configurations(path2pySD, path2build, original_config):
     nruns = 9
     mono_radius = [1.0e-07] * 6 + [3.0e-08] * 3
     numconc = [50.0e6] * 3 + [500.0e6] * 6
-    CONDTSTEP = [0.1] * 9
-    COUPLTSTEP = [0.1] * 9
-    OBSTSTEP = [0.1] * 9
+    dry_radius = mono_radius
+    CONDTSTEP = [0.1] * nruns
+    COUPLTSTEP = [0.1] * nruns
+    OBSTSTEP = [0.1] * nruns
     T_END = [300, 600, 150000] * 3
     W_avg = [1, 0.5, 0.002] * 3
     TAU_half = [150, 300, 75000] * 3
+
+    if is_vent_comparison:
+        nruns = 3
+        mono_radius = [1e-04, 1e-03, 5e-03]
+        numconc = [2 * 625e3, 2 * 625.0, 2 * 5.0]  # to get to 2.617993877991495 g/m^3
+        dry_radius = [1.0e-07] * 3
+        CONDTSTEP = [0.1] * nruns
+        COUPLTSTEP = [0.1] * nruns
+        OBSTSTEP = [0.1] * nruns
+        T_END = [300] * 3
+        W_avg = [1.0] * 3
+        TAU_half = [150] * 3
 
     config_filenames = []
     for r in range(nruns):
@@ -56,12 +69,15 @@ def generate_configurations(path2pySD, path2build, original_config):
         config_filenames.append(cf)
 
         initsupers_filename = str(sharepath / f"dimlessSDsinit_{r//3}.dat")
+        if is_vent_comparison:
+            initsupers_filename = str(sharepath / f"dimlessSDsinit_{r}.dat")
 
         params = {
             "savefigpath": str(savefigpath),
             "sharepath": str(sharepath),
             "mono_radius": mono_radius[r],
             "numconc": numconc[r],
+            "dry_radius": dry_radius[r],
             "CONDTSTEP": CONDTSTEP[r],
             "COUPLTSTEP": COUPLTSTEP[r],
             "OBSTSTEP": OBSTSTEP[r],
@@ -122,7 +138,7 @@ def gridbox_boundaries(path2pySD, config_filename, isfigures=[False, False]):
 
 
 def initial_superdroplet_conditions(
-    path2pySD, config_filename, isfigures=[False, False]
+    path2pySD, config_filename, is_vent_comparison, isfigures=[False, False]
 ):
     import sys
     import yaml
@@ -131,7 +147,6 @@ def initial_superdroplet_conditions(
     sys.path.append(path2pySD)  # for imports from pySD package
     from pySD.initsuperdropsbinary_src import (
         rgens,
-        dryrgens,
         probdists,
         attrsgen,
     )
@@ -161,10 +176,11 @@ def initial_superdroplet_conditions(
         # settings for superdroplet attributes
         mono_radius = float(pyconfig["supers"]["mono_radius"])
         numconc = pyconfig["supers"]["numconc"]
+        dry_radius = float(pyconfig["supers"]["dry_radius"])
 
         # attribute generators
         radiigen = rgens.MonoAttrGen(mono_radius)
-        dryradiigen = dryrgens.ScaledRadiiGen(1.0)
+        dryradiigen = rgens.MonoAttrGen(dry_radius)
         xiprobdist = probdists.DiracDelta(mono_radius)
         coord3gen = None
         coord1gen = None

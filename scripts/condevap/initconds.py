@@ -34,7 +34,9 @@ sys.path.append(str(Path(__file__).resolve().parents[2] / "src"))
 import condevap.initconds as ic
 
 
-def main(path2pySD, path2build, original_config, isfigures=[False, False]):
+def main(
+    path2pySD, path2build, original_config, is_vent_comparison, isfigures=[False, False]
+):
     if not (
         path2build.is_dir()
         and all([(path2build / f"{d}").is_dir() for d in ["tmp", "share", "bin"]])
@@ -48,13 +50,15 @@ def main(path2pySD, path2build, original_config, isfigures=[False, False]):
             path2dir.mkdir(exist_ok=True)
 
     config_filenames = ic.generate_configurations(
-        path2pySD, path2build, original_config
+        path2pySD, path2build, original_config, is_vent_comparison
     )
 
     ic.gridbox_boundaries(path2pySD, config_filenames[0], isfigures=isfigures)
 
     for cf in config_filenames:
-        ic.initial_superdroplet_conditions(path2pySD, cf, isfigures=isfigures)
+        ic.initial_superdroplet_conditions(
+            path2pySD, cf, is_vent_comparison, isfigures=isfigures
+        )
 
 
 if __name__ == "__main__":
@@ -85,10 +89,13 @@ if __name__ == "__main__":
     path2pySD = args.path2pySD
     path2build = args.path2build
     original_config = args.original_config
+    is_vent_comparison = False
     isfigures = [False, False]
     if args.is_plotfigs == "TRUE":
         isfigures[0] = True
     if args.is_savefigs == "TRUE":
         isfigures[1] = True
 
-    main(path2pySD, path2build, original_config, isfigures=isfigures)
+    main(
+        path2pySD, path2build, original_config, is_vent_comparison, isfigures=isfigures
+    )
