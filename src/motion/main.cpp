@@ -9,7 +9,7 @@
  * Author: Clara Bayley (CB)
  * Additional Contributors:
  * -----
- * Last Modified: Thursday 24th April 2025
+ * Last Modified: Friday 6th March 2026
  * Modified By: CB
  * -----
  * License: BSD 3-Clause "New" or "Revised" License
@@ -39,6 +39,7 @@
 #include "initialise/initialconditions.hpp"
 #include "initialise/timesteps.hpp"
 #include "observers/gbxindex_observer.hpp"
+#include "observers/nsupers_observer.hpp"
 #include "observers/observers.hpp"
 #include "observers/streamout_observer.hpp"
 #include "observers/superdrops_observer.hpp"
@@ -106,8 +107,9 @@ inline Observer auto create_superdrops_observer(const unsigned int interval,
       CollectSdgbxindex(dataset, maxchunk);
   CollectDataForDataset<Store> auto coord3 = CollectCoord3(dataset, maxchunk);
   CollectDataForDataset<Store> auto coord1 = CollectCoord1(dataset, maxchunk);
+  CollectDataForDataset<Store> auto radius = CollectRadius(dataset, maxchunk);
 
-  const auto collect_sddata = coord1 >> coord3 >> sdgbxindex >> sdid;
+  const auto collect_sddata = radius >> coord1 >> coord3 >> sdgbxindex >> sdid;
   return SuperdropsObserver(interval, dataset, maxchunk, collect_sddata);
 }
 
@@ -117,16 +119,21 @@ inline Observer auto create_observer(const Config &config,
                                      Dataset<Store> &dataset) {
   const auto obsstep = tsteps.get_obsstep();
   const auto maxchunk = config.get_maxchunk();
+  const auto ngbxs = config.get_ngbxs();
 
-  const Observer auto obs0 = StreamOutObserver(obsstep, &step2realtime);
+  const Observer auto obs0 = StreamOutObserver(obsstep*100, &step2realtime);
 
   const Observer auto obs1 =
       TimeObserver(obsstep, dataset, maxchunk, &step2dimlesstime);
 
+  const Observer auto obs2 = GbxindexObserver(dataset, maxchunk, ngbxs);
+
+  const Observer auto obs3 = NsupersObserver(obsstep, dataset, maxchunk, ngbxs);
+
   const Observer auto obssd =
       create_superdrops_observer(obsstep, dataset, maxchunk);
 
-  return obssd >> obs1 >> obs0;
+  return obssd >> obs3 >> obs2 >> obs1 >> obs0;
 }
 
 template <typename Store>
