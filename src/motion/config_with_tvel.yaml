@@ -37,8 +37,8 @@ python_initconds:
     PRESS0: 101500                                            # surface pressure[Pa]
     THETA: 289                                                # potential temperature below Zbase [K]
     Zbase: 750                                                # height of cloud layer [m]
-    qvapmethod: "qvap"                                        # calculate qvap from supersaturation ratios
-    qvaps: [0.0075, 0.0075]                                   # supersaturation ratios [below, above] Zbase
+    qvapmethod: "sratio"                                      # calculate qvap from supersaturation ratios
+    qvaps: [0.99, 1.0025]                                     # supersaturation ratios [below, above] Zbase
     qcond_init: 0.0                                           # initial non-superdroplet qcond [Kg/Kg]
     WMAX: 0.6                                                 # maximum updraught velocity [m/s]
     Zlength: 1500                                             # divergent flow coord3 (z) lengthscale [m]
@@ -56,7 +56,7 @@ timesteps:
   MOTIONTSTEP: X                                              # time between SDM motion [s]
   COUPLTSTEP: 3600                                            # time between dynamic couplings [s]
   OBSTSTEP: X                                                 # time between SDM observations [s]
-  T_END: 3600                                                 # time span of integration from 0s to T_END [s]
+  T_END: 7200                                                 # time span of integration from 0s to T_END [s]
 
 ### Initialisation Parameters ###
 inputfiles:
