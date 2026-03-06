@@ -1,3 +1,24 @@
+'''
+Copyright (c) 2026 MPI-M, Clara Bayley
+
+
+----- ValidatingCLEO -----
+File: plot_results.py
+Project: motion
+Created Date: Thursday 1st January 1970
+Author: Clara Bayley (CB)
+Additional Contributors:
+-----
+Last Modified: Friday 6th March 2026
+Modified By: CB
+-----
+License: BSD 3-Clause "New" or "Revised" License
+https://opensource.org/licenses/BSD-3-Clause
+-----
+File Description:
+'''
+
+
 """
 Copyright (c) 2025 MPI-M, Clara Bayley
 
@@ -59,6 +80,26 @@ def random_sample_superdroplet_data(sddata, nsample, attrs, times2select):
     return data_sample
 
 
+def sample_for_motion_plot(path2pySD, dataset, consts):
+    import sys
+
+    sys.path.append(str(path2pySD))
+    from pySD.sdmout_src import pyzarr
+
+    # read in output Xarray data
+    time = pyzarr.get_time(dataset)
+    sddata = pyzarr.get_supers(dataset, consts)
+
+    nsample = 500
+    attrs4sample = ["coord1", "coord3"]
+    times2plot = time.mins
+    sdsample = random_sample_superdroplet_data(
+        sddata, nsample, attrs4sample, times2plot
+    )
+
+    return time, sdsample
+
+
 def plot_superdroplet_sample_2dmotion(fig, ax, time, sdsample, cax=None):
     import numpy as np
     import matplotlib.pyplot as plt
@@ -85,87 +126,106 @@ def plot_superdroplet_sample_2dmotion(fig, ax, time, sdsample, cax=None):
         marker=".",
         s=0.001,
     )
-    ax.set_aspect("equal")
-    ax.set_xlabel("$x$ / m")
-    ax.set_ylabel("$z$ / m")
-    ax.set_xlim([0, 1500])
-    ax.set_ylim([0, 1500])
-    ax.set_xticks([0, 750, 1500])
-    ax.set_yticks([0, 750, 1500])
-    ax.spines[["left", "right"]].set_visible(False)
 
 
-def plot_results(path2pySD, datasets, setups):
+def plot_divergence_pergbx(ax, ds):
+    time = ds.time.values
+
+    ax.plot(time, ds.nsupers.values, alpha=0.3, linewidth=0.5, zorder=0)
+
+    mean = ds.nsupers.mean(dim="gbxindex")
+    std = ds.nsupers.std(dim="gbxindex")
+    ax.plot(time, mean, color="k", linewidth=1.0, zorder=2)
+    ax.plot(time, mean + std, color="k", linestyle="dashed", linewidth=1.0, zorder=2)
+    ax.plot(time, mean - std, color="k", linestyle="dashed", linewidth=1.0, zorder=2)
+
+    return ax
+
+
+def plot_motion_figure(path2pySD, datasets, setups):
     import sys
     import matplotlib.pyplot as plt
     from matplotlib.gridspec import GridSpec
 
     sys.path.append(str(path2pySD))
-    from pySD.sdmout_src import pyzarr, pysetuptxt
+    from pySD.sdmout_src import pysetuptxt
 
     fig = plt.figure(figsize=(4, 10.5))  # (3, 8) fits well
     gs = GridSpec(4, 1, figure=fig, height_ratios=[1] + [23] * 3)
     cax = fig.add_subplot(gs[0, :])
-
-    axes = [cax]
-    resolutions = [100, 50, 25]
+    axes = []
     for r in range(3):
         ax = fig.add_subplot(gs[r + 1, :])
+        axes.append(ax)
+    axes.append(cax)
+
+    for r in range(3):
+        ax = axes[r]
         dataset = datasets[r]
         setupfile = setups[r]
-        res = resolutions[r]
 
-        ### read in constants and intial setup from setup .txt file
         consts = pysetuptxt.get_consts(setupfile, isprint=True)
-
-        # read in output Xarray data
-        time = pyzarr.get_time(dataset)
-        sddata = pyzarr.get_supers(dataset, consts)
-
-        nsample = 500
-        attrs4sample = ["coord1", "coord3"]
-        times2plot = time.mins
-        sdsample = random_sample_superdroplet_data(
-            sddata, nsample, attrs4sample, times2plot
-        )
-
+        time, sdsample = sample_for_motion_plot(path2pySD, dataset, consts)
         plot_superdroplet_sample_2dmotion(fig, ax, time, sdsample, cax=cax)
-        t = ax.text(
-            1500, 1350, f"$\u0394 x = \u0394 z = {res}$ m", color="k", ha="right"
-        )
-        t.set_bbox(dict(facecolor="w", alpha=0.75, linewidth=0))
-        axes.append(ax)
         cax = None  # only plot cax once
-
-    fig.tight_layout()
-
-    return fig, axes
-
-
-def plot_results_2(path2pySD, datasets, setups):
-    import awkward as ak
-    import matplotlib.pyplot as plt
-    import xarray as xr
-
-    fig, axes = plt.subplots(nrows=len(datasets), ncols=1, figsize=(5, 9))
 
     resolutions = [100, 50, 25]
     for r in range(3):
         ax = axes[r]
         res = resolutions[r]
-        ds = xr.open_dataset(datasets[r], engine="zarr")
-        sdgbxindex = ak.unflatten(ds.sdgbxindex.values, counts=ds.raggedcount.values)
-        for ii in range(ak.max(sdgbxindex)):
-            num = ak.count(sdgbxindex[sdgbxindex == ii], axis=1)
-            ax.plot(ds.time.values, num)
-
-        ax.set_xlabel("time / s")
-        ax.set_ylabel("number of superdroplets per gridbox")
+        ax.set_aspect("equal")
+        ax.set_xlabel("$x$ / m")
+        ax.set_ylabel("$z$ / m")
+        ax.set_xlim([0, 1500])
+        ax.set_ylim([0, 1500])
+        ax.set_xticks([0, 750, 1500])
+        ax.set_yticks([0, 750, 1500])
+        ax.spines[["left", "right"]].set_visible(False)
         t = ax.text(
             1500, 1350, f"$\u0394 x = \u0394 z = {res}$ m", color="k", ha="right"
         )
         t.set_bbox(dict(facecolor="w", alpha=0.75, linewidth=0))
-        print(num)
+
     fig.tight_layout()
 
     return fig, axes
+
+
+def plot_divergence_pergbx_figure(datasets):
+    import xarray as xr
+    import matplotlib.pyplot as plt
+
+    fig, axes = plt.subplots(nrows=len(datasets), ncols=1, figsize=(5, 9))
+
+    for r in range(3):
+        ax = axes[r]
+        ds = xr.open_dataset(datasets[r], engine="zarr")
+        plot_divergence_pergbx(ax, ds)
+
+    resolutions = [100, 50, 25]
+    for r in range(3):
+        ax = axes[r]
+        res = resolutions[r]
+        ax.set_xlim(0, 3600)
+        ax.set_ylim(50, 200)
+        ax.spines[["right", "top"]].set_visible(False)
+        ax.set_xlabel("time / s")
+        ax.set_ylabel("superdroplets per grid-box")
+        t = ax.text(
+            3500, 180, f"$\u0394 x = \u0394 z = {res}$ m", color="k", ha="right"
+        )
+        t.set_bbox(dict(facecolor="w", alpha=0.75, linewidth=0))
+
+    fig.tight_layout()
+
+    return fig, axes
+
+
+def plot_results(path2pySD, datasets, setups):
+    fig1 = None
+
+    fig2, _ = plot_motion_figure(path2pySD, datasets, setups)
+
+    fig3, _ = plot_divergence_pergbx_figure(datasets)
+
+    return fig1, fig2, fig3

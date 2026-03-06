@@ -37,15 +37,19 @@ def main(path2CLEO, path2bin, path4figs):
         datasets[r] = path2bin / f"sol_{r}.zarr"
         setups[r] = path2bin / f"setup_{r}.txt"
 
-    fig, axes = mtnplt.plot_results(path2CLEO, datasets, setups)
-    savename = path4figs / "arabas_2015.pdf"
-    fig.savefig(savename, dpi=400, bbox_inches="tight", facecolor="w")
-    print("Figure .pdf saved as: " + str(savename))
+    fig1, fig2, fig3 = mtnplt.plot_results(path2CLEO, datasets, setups)
 
-    fig, axes = mtnplt.plot_results_2(path2CLEO, datasets, setups)
-    savename = path4figs / "arabas_2015_divergence_pergbx.pdf"
-    fig.savefig(savename, dpi=400, bbox_inches="tight", facecolor="w")
-    print("Figure .pdf saved as: " + str(savename))
+    # savename1 = path4figs / "arabas_2015_motion_with_divergence_pergbx.pdf"
+    # fig1.savefig(savename1, dpi=250, bbox_inches="tight", facecolor="w")
+    # print("Figure .pdf saved as: " + str(savename1))
+
+    savename2 = path4figs / "arabas_2015_motion.png"
+    fig2.savefig(savename2, dpi=250, bbox_inches="tight", facecolor="w")
+    print("Figure .png saved as: " + str(savename2))
+
+    savename3 = path4figs / "arabas_2015_divergence_pergbx.png"
+    fig3.savefig(savename3, dpi=250, bbox_inches="tight", facecolor="w")
+    print("Figure .png saved as: " + str(savename3))
 
 
 if __name__ == "__main__":
