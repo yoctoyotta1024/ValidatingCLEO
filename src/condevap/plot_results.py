@@ -107,7 +107,12 @@ def plot_one_dataset(path2pySD, axs, grid_filename, dataset, setupfile, do_plotk
         0.03, 0.95, "ascent /", transform=axs[0].transAxes, fontsize=16, color="k"
     )
     axs[0].text(
-        0.30, 0.95, "descent", transform=axs[0].transAxes, fontsize=16, color="orange"
+        0.30,
+        0.95,
+        "descent",
+        transform=axs[0].transAxes,
+        fontsize=16,
+        color="firebrick",
     )
     axs[0].text(0.03, 0.80, textlab, transform=axs[0].transAxes, fontsize=16, color="k")
 
