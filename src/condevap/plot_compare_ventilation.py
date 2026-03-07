@@ -159,3 +159,76 @@ def plot_compare_ventilation(path2pySD, grid_filename, datasets, setups):
     fig.tight_layout()
 
     return fig, axes
+
+
+def quickplot(path2CLEO, grid_filename, datasets, setups):
+    import sys
+    import matplotlib.pyplot as plt
+    import xarray as xr
+
+    sys.path.append(str(path2CLEO))  # for imports from pySD package
+    from pySD.sdmout_src import pyzarr, pysetuptxt, pygbxsdat
+
+    def displacement(time, w_avg, thalf):
+        return 1000 - w_avg * time
+
+    def relative_humidity(dataset, setupfile, grid_filename):
+        config = pysetuptxt.get_config(setupfile, nattrs=3, isprint=False)
+        consts = pysetuptxt.get_consts(setupfile, isprint=False)
+        gbxs = pygbxsdat.get_gridboxes(grid_filename, consts["COORD0"], isprint=False)
+        thermo = pyzarr.get_thermodata(dataset, config["ntime"], gbxs["ndims"], consts)
+
+        return thermo.relative_humidity()[:, 0, 0, 0] * 100  # percent
+
+    label = ["vent", "no vent"]
+
+    fig1, axes = plt.subplots(3, 5, figsize=(15, 10))
+    for r in range(6):
+        axs = axes[r // 2, :]
+        ds = xr.open_dataset(datasets[r], engine="zarr")
+        relh = relative_humidity(datasets[r], setups[r], grid_filename)
+
+        axs[0].plot(ds.time, ds.temp, label=label[r % 2])
+        axs[1].plot(ds.time, ds.press)
+        axs[2].plot(ds.time, relh)
+        axs[3].plot(ds.time, ds.radius / 1e3)
+        axs[4].plot(ds.time, -ds.qcond)
+
+    axes[0, 0].legend()
+    axes[0, 0].set_title("Temperature / K")
+    axes[0, 1].set_title("Pressure / hPa")
+    axes[0, 2].set_title("Relative Humidity / %")
+    axes[0, 3].set_title("Radius / mm")
+    axes[0, 4].set_title(r"Cum. q$_{c}$ loss / g/kg")
+
+    for ax in axes[-1, :]:
+        ax.set_xlabel("time / s")
+    fig1.tight_layout()
+
+    fig2, axes = plt.subplots(3, 5, figsize=(15, 10))
+    for r in range(6):
+        axs = axes[r // 2, :]
+        ds = xr.open_dataset(datasets[r], engine="zarr")
+        config = pysetuptxt.get_config(setups[r], nattrs=3, isprint=True)
+        zprof = displacement(ds.time.values, config["W_avg"], config["TAU_half"])
+        relh = relative_humidity(datasets[r], setups[r], grid_filename)
+
+        axs[0].plot(ds.temp, zprof, label=label[r % 2])
+        axs[1].plot(ds.press, zprof)
+        axs[2].plot(relh, zprof)
+        axs[3].plot(ds.radius / 1e3, zprof)
+        axs[4].plot(-ds.qcond, zprof)
+
+    axes[0, 0].set_title("Temperature / K")
+    axes[0, 1].set_title("Pressure / hPa")
+    axes[0, 2].set_title("Relative Humidity / %")
+    axes[0, 3].set_title("Radius / mm")
+    axes[0, 4].set_title(r"Cum. q$_{c}$ loss / g/kg")
+
+    for ax in axes[:, 0]:
+        ax.set_ylabel("height / m")
+
+    axes[0, 0].legend()
+    fig2.tight_layout()
+
+    return fig1, fig2
