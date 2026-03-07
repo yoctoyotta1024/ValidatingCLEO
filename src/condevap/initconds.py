@@ -53,14 +53,14 @@ def generate_configurations(path2pySD, path2build, original_config, is_vent_comp
     if is_vent_comparison:
         nruns = 3
         mono_radius = [1e-04, 1e-03, 5e-03]
-        numconc = [2 * 625e3, 2 * 625.0, 2 * 5.0]  # to get to 2.617993877991495 g/m^3
+        numconc = [625e3, 625.0, 5.0]  # to get to 2.617993877991495 g/m^3
         dry_radius = [1.0e-07] * 3
         CONDTSTEP = [0.1] * nruns
         COUPLTSTEP = [0.1] * nruns
         OBSTSTEP = [0.1] * nruns
-        T_END = [300] * 3
-        W_avg = [1.0] * 3
-        TAU_half = [150] * 3
+        T_END = [1000, 200, 100] * 3
+        W_avg = [1.0, 5.0, 10.0]
+        TAU_half = [0.0] * 3
 
     config_filenames = []
     for r in range(nruns):

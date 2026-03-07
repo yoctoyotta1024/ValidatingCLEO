@@ -73,9 +73,9 @@ def plot_one_dataset(path2pySD, ax, grid_filename, dataset, setupfile, color, vl
     ### plot settings
     # w velocity [cm/s] : linewidth on plot
     lwdths = {
-        100.0: 2,
-        50.0: 1,
-        0.2: 0.5,
+        1000.0: 2,
+        500.0: 1,
+        100.0: 0.5,
     }
 
     ### load data
