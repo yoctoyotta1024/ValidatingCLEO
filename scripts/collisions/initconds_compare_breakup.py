@@ -3,7 +3,7 @@ Copyright (c) 2025 MPI-M, Clara Bayley
 
 
 ----- ValidatingCLEO -----
-File: initconds.py
+File: initconds_compare_breakup.py
 Project: collisions
 Created Date: Wednesday 16th April 2025
 Author: Clara Bayley (CB)
@@ -17,10 +17,11 @@ https://opensource.org/licenses/BSD-3-Clause
 -----
 File Description:
 Script generates input files for CLEO 0-D box model with
-mono-size droplet distribution as S. Shima et al. 2009.
+droplet distribution as in Shima et al. 2009 for
+comparison study with de Jong et al. 2023.
 E.g. execute
 ``
-python ./scripts/collisions/initconds.py ~/CLEO/ /work/mh0731/m300950/validating_cleo/build \
+python ./scripts/collisions/initconds_compare_breakup.py ~/CLEO/ /work/mh0731/m300950/validating_cleo/build \
         /home/m/m300950/validating_cleo/src/collisions/config.yaml False False
 ``
 """
@@ -32,7 +33,7 @@ from pathlib import Path
 
 # for imports from collisions src module
 sys.path.append(str(Path(__file__).resolve().parents[2] / "src"))
-import collisions.initconds as ic
+import collisions.initconds_compare_breakup as iccb
 
 
 def main(path2pySD, path2build, original_config, isfigures=[False, False]):
@@ -48,14 +49,14 @@ def main(path2pySD, path2build, original_config, isfigures=[False, False]):
             path2dir = path2build / f"{d}" / "collisions"
             path2dir.mkdir(exist_ok=True)
 
-    config_filenames = ic.generate_configurations(
+    config_filenames = iccb.generate_configurations(
         path2pySD, path2build, original_config
     )
 
-    ic.gridbox_boundaries(path2pySD, config_filenames[0], isfigures=isfigures)
+    iccb.gridbox_boundaries(path2pySD, config_filenames[0], isfigures=isfigures)
 
     for cf in config_filenames:
-        ic.initial_superdroplet_conditions(path2pySD, cf, isfigures=isfigures)
+        iccb.initial_superdroplet_conditions(path2pySD, cf, isfigures=isfigures)
 
 
 if __name__ == "__main__":
