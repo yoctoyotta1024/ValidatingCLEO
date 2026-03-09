@@ -3,9 +3,9 @@
  *
  *
  * ----- ValidatingCLEO -----
- * File: main_testikstraub.cpp
+ * File: main_testikstraub_fixednfrags.cpp
  * Project: collisions
- * Created Date: Friday 11th April 2025
+ * Created Date: Monday 9th March 2026
  * Author: Clara Bayley (CB)
  * Additional Contributors:
  * -----
@@ -19,7 +19,7 @@
  * Program for CLEO 0-D box model of collisions as in Shima et al. 2009
  * with coalescence, rebound and breakup with glag decided based on section 4 of
  * Testik et al. 2011 (figure 12) as well as coalescence efficiency from
- * Straub et al. 2010. With number of fragments from Schlottke et al. 2010 (figure 13).
+ * Straub et al. 2010. With fixed number of fragments in breakup.
  */
 
 #include "./main_supplement.hpp"
@@ -27,7 +27,7 @@
 inline MicrophysicalProcess auto create_microphysics(const Config &config,
   const Timesteps &tsteps) {
 const PairProbability auto collprob = LongHydroProb();
-const NFragments auto nfrags = CollisionKineticEnergyNFrags{};
+const NFragments auto nfrags = ConstNFrags(config.get_breakup().constnfrags.nfrags);
 const CoalBuReFlag auto coalbure_flag = TSCoalBuReFlag{};
 const MicrophysicalProcess auto colls =
 CoalBuRe(tsteps.get_collstep(), &step2realtime, collprob, nfrags, coalbure_flag);
