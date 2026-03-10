@@ -40,14 +40,16 @@ def generate_configurations(path2pySD, path2build, original_config):
     grid_filename = sharepath / "dimlessGBxboundaries_bucomp.dat"
 
     # parameters specific for each run
-    nruns = 8  # [long, testikstraub, 3x straub, 3x constcoalbu]
+    nruns = (
+        9  # [long, testikstraub+schlottke, straub+schlottke, 3x straub, 3x constcoalbu]
+    )
     volexpr0 = [30.531e-06] * nruns
     numconc = [100e6] * nruns
     maxnsupers = [8192] * nruns
     COLLTSTEP = [1] * nruns
     T_END = [7200] * nruns
-    nfrags = [0, 0] + [2.51, 8, 16] * 2
-    coaleff = [1.0] * 5 + [0.95] * 3
+    nfrags = [0, 0, 0] + [2.51, 5, 10, 4, 16, 64]
+    coaleff = [1.0] * 6 + [0.95] * 3
 
     config_filenames = []
     for r in range(nruns):

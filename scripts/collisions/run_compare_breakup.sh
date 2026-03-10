@@ -23,8 +23,18 @@ SCRIPT_DIR=/home/m/m300950/validating_cleo/scripts
 runscript=${SCRIPT_DIR}/run.sh
 ### ---------------------------------------------------- ###
 
-### ------------ run tesikstraub executable ---------- ###
+### ------------ run long executable ---------- ###
 for run in 0; do
+  runcmd="${runscript} ${path2build} ${buildtype} \
+            /work/mh0731/m300950/validating_cleo/build/collisions/colls_long \
+            /work/mh0731/m300950/validating_cleo/build/tmp/collisions/config_bucomp_${run}.yaml"
+  echo ${runcmd}
+  eval ${runcmd}
+done;
+### -------------------------------------------------- ###
+
+### ------------ run tesikstraub executable ---------- ###
+for run in 1; do
   runcmd="${runscript} ${path2build} ${buildtype} \
             /work/mh0731/m300950/validating_cleo/build/collisions/colls_testikstraub \
             /work/mh0731/m300950/validating_cleo/build/tmp/collisions/config_bucomp_${run}.yaml"
@@ -33,10 +43,30 @@ for run in 0; do
 done;
 ### -------------------------------------------------- ###
 
-### ------------ run tesikstraub_fixednfrags executable ---------- ###
-for run in 1 2 3; do
+### ------------ run straub_schlottke executable ---------- ###
+for run in 2; do
+  runcmd="${runscript} ${path2build} ${buildtype} \
+            /work/mh0731/m300950/validating_cleo/build/collisions/colls_straub_schlottke \
+            /work/mh0731/m300950/validating_cleo/build/tmp/collisions/config_bucomp_${run}.yaml"
+  echo ${runcmd}
+  eval ${runcmd}
+done;
+### -------------------------------------------------- ###
+
+### ------------ run straub_fixednfrags executable ---------- ###
+for run in 3 4 5; do
   runcmd="${runscript} ${path2build} ${buildtype} \
             /work/mh0731/m300950/validating_cleo/build/collisions/colls_straub_fixednfrags \
+            /work/mh0731/m300950/validating_cleo/build/tmp/collisions/config_bucomp_${run}.yaml"
+  echo ${runcmd}
+  eval ${runcmd}
+done;
+### -------------------------------------------------- ###
+
+### ------------ run constcoalbu_fixednfrags executable ---------- ###
+for run in 6 7 8; do
+  runcmd="${runscript} ${path2build} ${buildtype} \
+            /work/mh0731/m300950/validating_cleo/build/collisions/colls_constcoalbu_fixednfrags \
             /work/mh0731/m300950/validating_cleo/build/tmp/collisions/config_bucomp_${run}.yaml"
   echo ${runcmd}
   eval ${runcmd}

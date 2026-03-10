@@ -80,7 +80,8 @@ Breakup Comparison
 ------------------
 
 To compare the results of the collision test cases including breakup, first build and compile the
-breakup excutables ``colls_testikstraub`` and ``colls_straub_fixednfrags`` as above.
+breakup excutables ``colls_testikstraub``, ``colls_straub_schlottke``, ``colls_straub_fixednfrags`` and
+``constcoalbu_fixednfrags`` as above, as well as the long executable ``colls_long``.
 
 The generate the initial conditons similarly but with the ``initconds_compare_breakup.py`` script
 and ``config_compare_breakup.yaml``.
@@ -111,6 +112,6 @@ E.g.
 
   $ python ./scripts/collisions/plot_compare_breakup.py`` \
       /home/m/m300950/CLEO \
-      /work/mh0731/m300950/validating_cleo/build/share/collisions/dimlessGBxboundaries.dat \
+      /work/mh0731/m300950/validating_cleo/build/share/collisions/dimlessGBxboundaries_bucomp.dat \
       /work/mh0731/m300950/validating_cleo/build/bin/collisions \
       /work/mh0731/m300950/validating_cleo/build/bin/collisions
