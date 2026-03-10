@@ -65,8 +65,8 @@ set_target_properties(${exec} PROPERTIES
   CXX_STANDARD 20)
 
 ### create primary executable 3 ###
-set(exec colls_testikstraub_fixednfrags)
-add_executable(${exec} EXCLUDE_FROM_ALL "main_testikstraub_fixednfrags.cpp")
+set(exec colls_straub_fixednfrags)
+add_executable(${exec} EXCLUDE_FROM_ALL "main_straub_fixednfrags.cpp")
 
 # Add directories and link libraries to target
 target_link_libraries(${exec} PRIVATE cartesiandomain "${CLEOLIBS}")

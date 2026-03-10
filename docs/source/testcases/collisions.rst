@@ -80,7 +80,7 @@ Breakup Comparison
 ------------------
 
 To compare the results of the collision test cases including breakup, first build and compile the
-breakup excutables ``colls_testikstraub`` and ``colls_testikstraub_fixednfrags`` as above.
+breakup excutables ``colls_testikstraub`` and ``colls_straub_fixednfrags`` as above.
 
 The generate the initial conditons similarly but with the ``initconds_compare_breakup.py`` script
 and ``config_compare_breakup.yaml``.

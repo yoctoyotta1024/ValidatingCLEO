@@ -36,7 +36,7 @@ done;
 ### ------------ run tesikstraub_fixednfrags executable ---------- ###
 for run in 1 2 3; do
   runcmd="${runscript} ${path2build} ${buildtype} \
-            /work/mh0731/m300950/validating_cleo/build/collisions/colls_testikstraub_fixednfrags \
+            /work/mh0731/m300950/validating_cleo/build/collisions/colls_straub_fixednfrags \
             /work/mh0731/m300950/validating_cleo/build/tmp/collisions/config_bucomp_${run}.yaml"
   echo ${runcmd}
   eval ${runcmd}
