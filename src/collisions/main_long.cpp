@@ -9,7 +9,7 @@
  * Author: Clara Bayley (CB)
  * Additional Contributors:
  * -----
- * Last Modified: Wednesday 16th April 2025
+ * Last Modified: Tuesday 10th March 2026
  * Modified By: CB
  * -----
  * License: BSD 3-Clause "New" or "Revised" License
@@ -24,7 +24,7 @@
 
 inline MicrophysicalProcess auto create_microphysics(const Config &config,
   const Timesteps &tsteps) {
-const PairProbability auto prob = LongHydroProb();
+const PairProbability auto prob = LongHydroProb(config.get_coalescence().constcoaleff.coaleff);
 const MicrophysicalProcess auto colls = CollCoal(tsteps.get_collstep(), &step2realtime, prob);
 return colls;
 }
