@@ -40,7 +40,7 @@ timesteps:
   COLLTSTEP: XXX                                              # time between SD collision [s]
   MOTIONTSTEP: 1                                              # time between SDM motion [s]
   COUPLTSTEP: 1200                                            # time between dynamic couplings [s]
-  OBSTSTEP: 60                                                # time between SDM observations [s]
+  OBSTSTEP: XXX                                               # time between SDM observations [s]
   T_END: XXX                                                  # time span of integration from 0s to T_END [s]
 
 ### Initialisation Parameters ###

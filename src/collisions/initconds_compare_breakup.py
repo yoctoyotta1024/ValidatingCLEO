@@ -47,8 +47,9 @@ def generate_configurations(path2pySD, path2build, original_config):
     numconc = [100e6] * nruns
     maxnsupers = [8192] * nruns
     COLLTSTEP = [1] * nruns
-    T_END = [7200] * nruns
-    nfrags = [0, 0, 0] + [2.51, 5, 10, 4, 16, 64]
+    OBSTSTEP = [10] + [60] * 5 + [10] * 3
+    T_END = [240] + [7200] * 5 + [240] * 3
+    nfrags = [0, 0, 0] + [2.51, 4, 8, 4, 16, 64]
     coaleff = [1.0] * 6 + [0.95] * 3
 
     config_filenames = []
@@ -66,6 +67,7 @@ def generate_configurations(path2pySD, path2build, original_config):
             "numconc": numconc[r],
             "maxnsupers": maxnsupers[r],
             "COLLTSTEP": COLLTSTEP[r],
+            "OBSTSTEP": OBSTSTEP[r],
             "T_END": T_END[r],
             "constants_filename": str(constants_filename),
             "grid_filename": str(grid_filename),
@@ -104,9 +106,9 @@ def gridbox_boundaries(path2pySD, config_filename, isfigures=[False, False]):
         savefigpath = Path(pyconfig["paths"]["savefigpath"])
 
         ### --- settings for 0-D Model gridbox boundaries --- ###
-        zgrid = [0, 100, 100]
-        xgrid = [0, 100, 100]
-        ygrid = [0, 100, 100]
+        zgrid = [0, 10, 10]
+        xgrid = [0, 10, 10]
+        ygrid = [0, 10, 10]
         ### ---------------------------------------------------------------- ###
 
         ### -------------------- INPUT FILES GENERATION -------------------- ###
@@ -129,11 +131,10 @@ def initial_superdroplet_conditions(
     import yaml
     from pathlib import Path
 
-    from .attrgens_shima2009 import SampleRadiiShima2009, SampleXiShima2009
-
     sys.path.append(path2pySD)  # for imports from pySD package
     from pySD.initsuperdropsbinary_src import (
         rgens,
+        probdists,
         attrsgen,
     )
     from pySD import geninitconds as gic
@@ -163,11 +164,12 @@ def initial_superdroplet_conditions(
         dryradius = pyconfig["supers"]["dryradius"]
         volexpr0 = pyconfig["supers"]["volexpr0"]
         numconc = pyconfig["supers"]["numconc"]
+        rspan = [5e-6, 7e-5]
 
         # attribute generators
-        radiigen = SampleRadiiShima2009(volexpr0)
+        radiigen = rgens.SampleLog10RadiiGen(rspan)
         dryradiigen = rgens.MonoAttrGen(dryradius)
-        xiprobdist = SampleXiShima2009()
+        xiprobdist = probdists.VolExponential(volexpr0, rspan)
         coord3gen = None
         coord1gen = None
         coord2gen = None
