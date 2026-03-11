@@ -20,12 +20,13 @@ and source directory in ``/home/m/m300950/validating_cleo/src/``:
       /home/m/m300950/validating_cleo/src/ \
       /work/mh0731/m300950/validating_cleo/build
 
-Then compile the example with:
+Then compile the example with the ``colls_golovin`` and ``colls_long`` and ``colls_testikstraub``
+executables with:
 
 .. code-block:: console
 
   $ ./scripts/compile_only.sh \
-      colls_golovin \
+      [colls_golovin or colls_long or colls_testikstraub] \
       openmp \
       intel \
       /home/m/m300950/validating_cleo/src/ \
