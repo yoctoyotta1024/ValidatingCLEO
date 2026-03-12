@@ -28,6 +28,7 @@ python_initconds:
     dryradius: 1.0e-16                                        # all SDs have negligible solute [m]
     volexpr0: XXX                                             # peak of volume exponential distribution [m]
     numconc: XXX                                              # = 2^23 = total no. conc of real droplets [m^-3]
+    use_marshall_parmer: XXX                                  # use Marshall-Palmer distribution instead
 
 ### SDM Runtime Parameters ###
 domain:
