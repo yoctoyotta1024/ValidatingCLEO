@@ -50,9 +50,9 @@ def main(path2CLEO, grid_filename, path2bin, path4figs, plot_marshall_parmer=Fal
         fig2.savefig(savename, dpi=400, bbox_inches="tight", facecolor="w")
         print("Figure .pdf saved as: " + str(savename))
 
-        savename = path4figs / "dejong2023_fig8.pdf"
+        savename = path4figs / "dejong2023_fig8.png"
         fig3.savefig(savename, dpi=400, bbox_inches="tight", facecolor="w")
-        print("Figure .pdf saved as: " + str(savename))
+        print("Figure .png saved as: " + str(savename))
     else:
         datasets = {}
         setups = {}
