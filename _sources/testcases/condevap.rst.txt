@@ -78,8 +78,9 @@ E.g.
       /work/mh0731/m300950/validating_cleo/build/bin/condevap \
       /work/mh0731/m300950/validating_cleo/build/bin/condevap
 
-Or compare datasets made with/without the ventilation factor compiled using
-``./scipts/condevap/plot_compare_ventilation.py`` E.g.
+Or compare datasets made with/without the ventilation factor compiled (and with constant negative
+velocity with magnitude=w_avg instead of sinusoidal motion - see dp_dt in ``differentialfuncs.cpp'')
+use ``./scipts/condevap/plot_compare_ventilation.py``, E.g.
 
 .. code-block:: console
 
