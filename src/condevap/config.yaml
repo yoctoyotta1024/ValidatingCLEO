@@ -71,8 +71,8 @@ microphysics:
 coupled_dynamics:
   type: cvode                                              # type of coupled dynamics to configure
   # initial (uniform) thermodynamic conditions #
-  P_init: 100000.0                                         # initial pressure [Pa]
-  TEMP_init: 298.15                                        # initial temperature [T]
+  P_init: 90000.0                                          # initial pressure [Pa]
+  TEMP_init: 290                                           # initial temperature [T]
   relh_init: 98.0                                          # initial relative humidity (%)
   # ODE solver parameters #
   W_avg: XXX                                               # average amplitude of sinusoidal w [m/s] (dP/dt ~ w*dP/dz)

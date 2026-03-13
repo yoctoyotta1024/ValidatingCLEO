@@ -44,7 +44,13 @@ def main(path2CLEO, grid_filename, path2bin_vent, path2bin_no_vent, path4figs):
     for r in range(6):
         print(datasets[r])
 
-    fig, axes = ventplt.plot_compare_ventilation(
+    fig1, fig2 = ventplt.quickplot(path2CLEO, grid_filename, datasets, setups)
+    for f, fig in enumerate([fig1, fig2]):
+        savename = path4figs / f"compare_ventilation_quickplot_{f}.png"
+        fig.savefig(savename, dpi=400, bbox_inches="tight", facecolor="w")
+        print("Figure .png saved as: " + str(savename))
+
+    fig, _ = ventplt.plot_compare_ventilation(
         path2CLEO, grid_filename, datasets, setups
     )
     savename = path4figs / "arabas_shima_2017_compare_ventilation.pdf"
