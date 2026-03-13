@@ -2,6 +2,25 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.7.0](https://github.com/yoctoyotta1024/ValidatingCLEO/compare/47844466ac1d792173ee954ddc8f54f8484cd8c8..v0.7.0) - 2026-03-13
+#### Features
+- new plotting function for motion with divergence - ([a54826f](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/a54826f4c6c1c4b616701525ecd07f7b895a890b)) - clara.bayley
+- new executable to run motion validation with terminal velocity - ([ae75f0b](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/ae75f0bc7f6d75565af0ab48687d43dea8b79e24)) - clara.bayley
+#### Miscellaneous Chores
+- fix header - ([dfeef5d](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/dfeef5dc164ef4db2719a9c77a09787c8d19bc1a)) - clara.bayley
+- update gitignore - ([5a7fd3f](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/5a7fd3f59e1903a657c384b3bd10297354e799e2)) - clara.bayley
+- increase slurm time - ([277e201](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/277e2012a383ee85d7f73438f77b58bd9a8a2e34)) - clara.bayley
+- use mh0731 account on levante - ([4784446](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/47844466ac1d792173ee954ddc8f54f8484cd8c8)) - clara.bayley
+#### Refactoring
+- re-modularise motion plots - ([0119575](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/01195752315b056c038a2484abba1e793360dd4a)) - clara.bayley
+- run with tvel with condensation in thermo layer and for 2hrs - ([0e65682](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/0e65682940c7db1a0b8bd37e5f4703d7eecacb45)) - clara.bayley
+- add nsupers and radius observers to motion output - ([76e5575](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/76e5575e0e180fbf978301e7f69b5434f426045d)) - clara.bayley
+- change orange colour to firebrick - ([de4100d](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/de4100d5a8b233f0e318e528cbb14c88d2e5c477)) - clara.bayley
+- relabel N -> n_s - ([5949dcf](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/5949dcf8be6b7819aa490408f2f17052f58208f4)) - clara.bayley
+- save files as .pdfs - ([49a550e](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/49a550e86ba198dd5c3215756d12b62acc719374)) - clara.bayley
+
+- - -
+
 ## [v0.6.0](https://github.com/yoctoyotta1024/ValidatingCLEO/compare/72d42990af6e4978204b1b83e0c75c0d78fe3e33..v0.6.0) - 2025-09-02
 #### Documentation
 - info on tested CLEO version - ([72d4299](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/72d42990af6e4978204b1b83e0c75c0d78fe3e33)) - clara.bayley
