@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.9.0](https://github.com/yoctoyotta1024/ValidatingCLEO/compare/0ae0d849d7e1d5bb4ee4f2f3c83bc7ef8e7cd83f..v0.9.0) - 2026-03-13
+#### Features
+- new quickplot for comparing ventillation effect - ([0ae0d84](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/0ae0d849d7e1d5bb4ee4f2f3c83bc7ef8e7cd83f)) - clara.bayley
+#### Refactoring
+- beautify plot for comparing ventilation effect - ([6ac6417](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/6ac6417e7873d846b97df3d3d27d01e94a75870b)) - clara.bayley
+- use linear velocities for ventil comparison - ([a860ed6](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/a860ed66d8bdfd2fc7a2e2904b7545dc6f7d0d1a)) - clara.bayley
+
+- - -
+
 ## [v0.8.0](https://github.com/yoctoyotta1024/ValidatingCLEO/compare/59152ef0de0caa2f8f49bdf8a01599f9e397cd12..v0.8.0) - 2026-03-13
 #### Features
 - new plotting script to compare ventillation factor - ([5ea1210](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/5ea1210699bd236a6526cdf5528778e64d4b5edd)) - clara.bayley
