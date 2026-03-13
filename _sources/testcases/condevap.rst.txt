@@ -77,3 +77,15 @@ E.g.
       /work/mh0731/m300950/validating_cleo/build/share/condevap/dimlessGBxboundaries.dat \
       /work/mh0731/m300950/validating_cleo/build/bin/condevap \
       /work/mh0731/m300950/validating_cleo/build/bin/condevap
+
+Or compare datasets made with/without the ventilation factor compiled using
+``./scipts/condevap/plot_compare_ventilation.py`` E.g.
+
+.. code-block:: console
+
+  $ python ./scripts/condevap/plot_compare_ventilation.py \
+      /home/m/m300950/CLEO \
+      /work/mh0731/m300950/validating_cleo/build/share/condevap/dimlessGBxboundaries.dat \
+      /work/mh0731/m300950/validating_cleo/build/bin/condevap \
+      /work/mh0731/m300950/validating_cleo/build_novent/bin/condevap \
+      /work/mh0731/m300950/validating_cleo/build/bin
