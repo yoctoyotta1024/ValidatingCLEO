@@ -21,13 +21,16 @@ buildtype=${2:-openmp}                                          # "serial", "thr
 
 SCRIPT_DIR=/home/m/m300950/validating_cleo/scripts
 runscript=${SCRIPT_DIR}/run.sh
+
+label="bucomp"
+# label="bucomp_marshpam"  # only need runs 2,3,4 and 5 (straub efficiency)
 ### ---------------------------------------------------- ###
 
 ### ------------ run long executable ---------- ###
 for run in 0; do
   runcmd="${runscript} ${path2build} ${buildtype} \
             /work/mh0731/m300950/validating_cleo/build/collisions/colls_long \
-            /work/mh0731/m300950/validating_cleo/build/tmp/collisions/config_bucomp_${run}.yaml"
+            /work/mh0731/m300950/validating_cleo/build/tmp/collisions/config_${label}_${run}.yaml"
   echo ${runcmd}
   eval ${runcmd}
 done;
@@ -37,7 +40,7 @@ done;
 for run in 1; do
   runcmd="${runscript} ${path2build} ${buildtype} \
             /work/mh0731/m300950/validating_cleo/build/collisions/colls_testikstraub \
-            /work/mh0731/m300950/validating_cleo/build/tmp/collisions/config_bucomp_${run}.yaml"
+            /work/mh0731/m300950/validating_cleo/build/tmp/collisions/config_${label}_${run}.yaml"
   echo ${runcmd}
   eval ${runcmd}
 done;
@@ -47,7 +50,7 @@ done;
 for run in 2; do
   runcmd="${runscript} ${path2build} ${buildtype} \
             /work/mh0731/m300950/validating_cleo/build/collisions/colls_straub_schlottke \
-            /work/mh0731/m300950/validating_cleo/build/tmp/collisions/config_bucomp_${run}.yaml"
+            /work/mh0731/m300950/validating_cleo/build/tmp/collisions/config_${label}_${run}.yaml"
   echo ${runcmd}
   eval ${runcmd}
 done;
@@ -57,7 +60,7 @@ done;
 for run in 3 4 5; do
   runcmd="${runscript} ${path2build} ${buildtype} \
             /work/mh0731/m300950/validating_cleo/build/collisions/colls_straub_fixednfrags \
-            /work/mh0731/m300950/validating_cleo/build/tmp/collisions/config_bucomp_${run}.yaml"
+            /work/mh0731/m300950/validating_cleo/build/tmp/collisions/config_${label}_${run}.yaml"
   echo ${runcmd}
   eval ${runcmd}
 done;
@@ -67,7 +70,7 @@ done;
 for run in 6 7 8; do
   runcmd="${runscript} ${path2build} ${buildtype} \
             /work/mh0731/m300950/validating_cleo/build/collisions/colls_constcoalbu_fixednfrags \
-            /work/mh0731/m300950/validating_cleo/build/tmp/collisions/config_bucomp_${run}.yaml"
+            /work/mh0731/m300950/validating_cleo/build/tmp/collisions/config_${label}_${run}.yaml"
   echo ${runcmd}
   eval ${runcmd}
 done;
