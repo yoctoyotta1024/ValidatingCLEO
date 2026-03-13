@@ -53,6 +53,28 @@ def calc_massdendistrib(
     return hist, hcens, nsupers
 
 
+def calc_numconcdistrib(sddata2plot, time_n, gbxs, nbins, rspan):
+    import numpy as np
+
+    sdgbxindex = sddata2plot["sdgbxindex"][time_n]
+    radius = sddata2plot["radius"][time_n] / 1e6  # [m]
+    xi = sddata2plot["xi"][time_n]
+
+    gbx2plt = 0  # plot 0th gridbox
+    volume = gbxs["gbxvols"][0, 0, 0]  # assuming all gbxs have same volume [m^3]
+
+    radius = np.where(sdgbxindex == gbx2plt, radius, np.nan)
+    xi = np.where(sdgbxindex == gbx2plt, xi, np.nan)
+
+    wghts = xi / volume  # real droplets [m^-3]
+    hedgs = np.linspace(rspan[0], rspan[1], nbins)  # [m]
+    hist, hedgs = np.histogram(radius, bins=hedgs, weights=wghts)
+    hwdths = hedgs[1:] - hedgs[:-1]
+    hcens = hedgs[:-1] + hwdths / 2
+
+    return hist, hedgs, hcens, hwdths
+
+
 def plot_step_dist_on_axes(ax, hcens, hist, kwargs):
     return ax.step(hcens, hist, where="mid", **kwargs)[0]
 
@@ -183,7 +205,7 @@ def plot_massdendistrib_evolution_oneplot(
 
         smoothsig = False
         rspan = [1, 1e4]
-        nbins = 128
+        nbins = 64
 
         attrs2sel = ["sdgbxindex", "radius", "xi"]
         sddata2plot = sdtracing.attributes_at_times(sddata, time, times2plot, attrs2sel)
@@ -515,3 +537,137 @@ def plot_compare_breakup(path2pySD, grid_filename, datasets, setups):
     fig3, _ = plot_dejong_figure8(path2pySD, grid_filename, datasets2plot, setups2plot)
 
     return fig1, fig2, fig3
+
+
+def plot_numconc_normalised_distribs(
+    path2pySD, ax, times2plot, grid_filename, dataset, setupfile, kwargs
+):
+    import sys
+    import numpy as np
+
+    sys.path.append(str(path2pySD))  # for imports from pySD package
+    from pySD.sdmout_src import pyzarr, pysetuptxt, pygbxsdat, sdtracing
+
+    ### read in constants and intial setup from setup .txt file
+    config = pysetuptxt.get_config(setupfile, nattrs=3, isprint=True)
+    consts = pysetuptxt.get_consts(setupfile, isprint=True)
+    gbxs = pygbxsdat.get_gridboxes(grid_filename, consts["COORD0"], isprint=True)
+
+    # read in output Xarray data
+    time = pyzarr.get_time(dataset).secs
+    sddata = pyzarr.get_supers(dataset, consts)
+
+    rspan = [0, 7e-3]
+    nbins = 128
+
+    attrs2sel = ["sdgbxindex", "radius", "xi"]
+    sddata2plot = sdtracing.attributes_at_times(sddata, time, times2plot, attrs2sel)
+
+    for n, t2plt in enumerate(times2plot):
+        ind = np.argmin(abs(time - t2plt))
+        print("plotting at t = ", time[ind])
+
+        hist, hedgs, hcens, hwdths = calc_numconcdistrib(
+            sddata2plot, n, gbxs, nbins, rspan
+        )
+        hist_normalised = hist / hwdths / 1000  # num conc per bin / m^-3 mm^-1
+        hcens = hcens * 2e3  # convert radius to diam [mm]
+
+        nfrags = config["nfrags"]
+        if nfrags > 0.0:
+            kwargs["label"] = kwargs["label"] + "=" + f"{nfrags}"
+
+        plot_step_dist_on_axes(ax, hcens, hist_normalised, kwargs)
+    ax.set_yscale("log")
+
+    return ax
+
+
+def plot_straub_fig10_data(ax):
+    from .straub2010_data import get_straub_fig10_data
+
+    x, y = get_straub_fig10_data()
+    ax.plot(x, y, color="k", linestyle="--")
+    return ax
+
+
+def plot_dejong_figure9(path2pySD, grid_filename, datasets2plot, setups2plot):
+    import matplotlib.pyplot as plt
+
+    ### nfrags: [label, colour]
+    labels_colors_lstyles = {
+        "schlottke": ["Schlottke et al. 2010", "orangered", "solid"],
+        "nfrags_0": ["$\mathrm{N}_{\mathrm{frag}}$", "blue", "dashdot"],
+        "nfrags_1": ["$\mathrm{N}_{\mathrm{frag}}$", "dodgerblue", "dashdot"],
+        "nfrags_2": ["$\mathrm{N}_{\mathrm{frag}}$", "fuchsia", "dashdot"],
+    }
+
+    fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(8, 4))
+
+    times2plot = [0]
+    for key, dataset in datasets2plot.items():
+        kwargs = {
+            "color": "k",
+            "label": labels_colors_lstyles[key][0],
+            "linestyle": labels_colors_lstyles[key][2],
+        }
+        plot_numconc_normalised_distribs(
+            path2pySD,
+            axes[0],
+            times2plot,
+            grid_filename,
+            dataset,
+            setups2plot[key],
+            kwargs,
+        )
+
+    times2plot = [7200]
+    for key, dataset in datasets2plot.items():
+        kwargs = {
+            "label": labels_colors_lstyles[key][0],
+            "color": labels_colors_lstyles[key][1],
+            "linestyle": labels_colors_lstyles[key][2],
+        }
+        plot_numconc_normalised_distribs(
+            path2pySD,
+            axes[1],
+            times2plot,
+            grid_filename,
+            dataset,
+            setups2plot[key],
+            kwargs,
+        )
+
+    plot_straub_fig10_data(axes[1])
+
+    for ax in axes:
+        ax.set_xlim([0, 4])
+        ax.set_ylim([10, 2e5])
+        ax.set_xlabel("diameter / mm")
+        ax.set_ylabel("number concentration / m$^{-3}$ mm$^{-1}$")
+        ax.spines[["top", "right"]].set_visible(False)
+
+    axes[1].legend(loc=(-1.1, 0.6))
+
+    fig.subplots_adjust(wspace=0.4)
+
+    return fig, axes
+
+
+def plot_compare_marshall_parmer_breakup(path2pySD, grid_filename, datasets, setups):
+    # straub coaleff with different nfrags
+    datasets2plot = {
+        "schlottke": datasets[2],
+        "nfrags_0": datasets[3],
+        "nfrags_1": datasets[4],
+        "nfrags_2": datasets[5],
+    }
+    setups2plot = {
+        "schlottke": setups[2],
+        "nfrags_0": setups[3],
+        "nfrags_1": setups[4],
+        "nfrags_2": setups[5],
+    }
+    fig4, _ = plot_dejong_figure9(path2pySD, grid_filename, datasets2plot, setups2plot)
+
+    return fig4
