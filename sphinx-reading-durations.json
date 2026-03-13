@@ -1,0 +1,11 @@
+{
+    "index": 0.014,
+    "references": 0.001,
+    "testcases/collisions": 0.005,
+    "testcases/condevap": 0.005,
+    "testcases/motion": 0.007,
+    "usage/contact": 0.003,
+    "usage/contributing": 0.001,
+    "usage/getstart": 0.003,
+    "usage/ourdocs": 0.007
+}
