@@ -3,7 +3,7 @@
  *
  *
  * ----- ValidatingCLEO -----
- * File: main.cpp
+ * File: main_with_tvel.cpp
  * Project: motion
  * Created Date: Thursday 24th April 2025
  * Author: Clara Bayley (CB)
@@ -48,6 +48,7 @@
 #include "runcleo/couplingcomms.hpp"
 #include "runcleo/runcleo.hpp"
 #include "runcleo/sdmmethods.hpp"
+#include "superdrops/condensation.hpp"
 #include "superdrops/microphysicalprocess.hpp"
 #include "superdrops/motion.hpp"
 #include "zarr/fsstore.hpp"
@@ -83,7 +84,7 @@ inline GridboxMaps auto create_gbxmaps(const Config &config) {
 
 inline auto create_movement(const unsigned int motionstep,
                             const CartesianMaps &gbxmaps) {
-  const auto terminalv = NullTerminalVelocity{};
+  const auto terminalv = RogersGKTerminalVelocity{};
   const Motion<CartesianMaps> auto motion =
       CartesianMotion(motionstep, &step2dimlesstime, terminalv);
 
@@ -93,9 +94,19 @@ inline auto create_movement(const unsigned int motionstep,
   return cartesian_movement(gbxmaps, motion, boundary_conditions);
 }
 
+inline MicrophysicalProcess auto config_condensation(const Config &config,
+                                                     const Timesteps &tsteps) {
+  const auto c = config.get_condensation();
+
+  return Condensation(tsteps.get_condstep(), &step2dimlesstime, c.do_alter_thermo, c.maxniters,
+                      c.rtol, c.atol, c.MINSUBTSTEP, &realtime2dimless);
+}
+
 inline MicrophysicalProcess auto create_microphysics(const Config &config,
                                                      const Timesteps &tsteps) {
-  return NullMicrophysicalProcess{};
+  const MicrophysicalProcess auto cond = config_condensation(config, tsteps);
+
+  return cond;
 }
 
 template <typename Store>

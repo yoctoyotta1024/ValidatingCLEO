@@ -148,7 +148,7 @@ def plot_massdendistrib_evolution(
                     zorder=0,
                 )[0]
                 khandles.append(kline)
-                klab = f"{lstyles[kernel][0]}\n$N$={nsupers}"
+                klab = lstyles[kernel][0] + "\n$n_{\mathrm{s}}$=" + f"{nsupers}"
                 klabels.append(klab)
 
             ax.plot(
