@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.8.0](https://github.com/yoctoyotta1024/ValidatingCLEO/compare/59152ef0de0caa2f8f49bdf8a01599f9e397cd12..v0.8.0) - 2026-03-13
+#### Features
+- new plotting script to compare ventillation factor - ([5ea1210](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/5ea1210699bd236a6526cdf5528778e64d4b5edd)) - clara.bayley
+#### Refactoring
+- add option for different cond/evap initialisation - ([59152ef](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/59152ef0de0caa2f8f49bdf8a01599f9e397cd12)) - clara.bayley
+
+- - -
+
 ## [v0.7.0](https://github.com/yoctoyotta1024/ValidatingCLEO/compare/47844466ac1d792173ee954ddc8f54f8484cd8c8..v0.7.0) - 2026-03-13
 #### Features
 - new plotting function for motion with divergence - ([a54826f](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/a54826f4c6c1c4b616701525ecd07f7b895a890b)) - clara.bayley
