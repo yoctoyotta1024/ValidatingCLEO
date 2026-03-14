@@ -1,7 +1,7 @@
 {
-    "index": 0.014,
-    "references": 0.001,
-    "testcases/collisions": 0.005,
+    "index": 0.016,
+    "references": 0.002,
+    "testcases/collisions": 0.007,
     "testcases/condevap": 0.005,
     "testcases/motion": 0.007,
     "usage/contact": 0.003,

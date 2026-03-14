@@ -253,9 +253,10 @@ and source directory in <code class="docutils literal notranslate"><span class="
 <span class="w">    </span>/work/mh0731/m300950/validating_cleo/build
 </pre></div>
 </div>
-<p>Then compile the example with:</p>
+<p>Then compile the example with the <code class="docutils literal notranslate"><span class="pre">colls_golovin</span></code> and <code class="docutils literal notranslate"><span class="pre">colls_long</span></code> and <code class="docutils literal notranslate"><span class="pre">colls_testikstraub</span></code>
+executables with:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>./scripts/compile_only.sh<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>colls_golovin<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">[</span>colls_golovin<span class="w"> </span>or<span class="w"> </span>colls_long<span class="w"> </span>or<span class="w"> </span>colls_testikstraub<span class="o">]</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>openmp<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>intel<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>/home/m/m300950/validating_cleo/src/<span class="w"> </span><span class="se">\</span>
@@ -279,7 +280,7 @@ conditions, you would run:</p>
 </section>
 <section id="run-model">
 <h2>Run Model<a class="headerlink" href="#run-model" title="Link to this heading">¶</a></h2>
-<p>Use <code class="docutils literal notranslate"><span class="pre">./scripts/run.sh</span></code> to run the executable (or <code class="docutils literal notranslate"><span class="pre">./scripts/run_gpu.sh</span></code> for gpu SLURM settings).
+<p>Use <code class="docutils literal notranslate"><span class="pre">./scripts/run_allcollisions.sh</span></code> to run all the executables.
 E.g.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>./scripts/collisions/run_allcollisions.sh<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>/work/mh0731/m300950/validating_cleo/build<span class="w"> </span><span class="se">\</span>
@@ -294,6 +295,39 @@ E.g.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>./scripts/collisions/plot_results.py<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>/home/m/m300950/CLEO<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>/work/mh0731/m300950/validating_cleo/build/share/collisions/dimlessGBxboundaries.dat<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>/work/mh0731/m300950/validating_cleo/build/bin/collisions<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>/work/mh0731/m300950/validating_cleo/build/bin/collisions
+</pre></div>
+</div>
+</section>
+<section id="breakup-comparison">
+<h2>Breakup Comparison<a class="headerlink" href="#breakup-comparison" title="Link to this heading">¶</a></h2>
+<p>To compare the results of the collision test cases including breakup, first build and compile the
+breakup excutables <code class="docutils literal notranslate"><span class="pre">colls_testikstraub</span></code>, <code class="docutils literal notranslate"><span class="pre">colls_straub_schlottke</span></code>, <code class="docutils literal notranslate"><span class="pre">colls_straub_fixednfrags</span></code> and
+<code class="docutils literal notranslate"><span class="pre">constcoalbu_fixednfrags</span></code> as above, as well as the long executable <code class="docutils literal notranslate"><span class="pre">colls_long</span></code>.</p>
+<p>The generate the initial conditons similarly but with the <code class="docutils literal notranslate"><span class="pre">initconds_compare_breakup.py</span></code> script
+and <code class="docutils literal notranslate"><span class="pre">config_compare_breakup.yaml</span></code>.
+E.g.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>./scripts/collisions/initconds_compare_breakup.py<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>/home/m/m300950/CLEO<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>/work/mh0731/m300950/validating_cleo/build<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>/home/m/m300950/validating_cleo/src/collisions/config_compare_breakup.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>TRUE<span class="w"> </span>TRUE
+</pre></div>
+</div>
+<p>Similarly use <code class="docutils literal notranslate"><span class="pre">./scripts/run_compare_breakup.sh</span></code> to run the executables.
+E.g.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>./scripts/collisions/run_compare_breakup.sh<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>/work/mh0731/m300950/validating_cleo/build<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>openmp
+</pre></div>
+</div>
+<p>Similarly plot the results of the model runs using the python script
+<code class="docutils literal notranslate"><span class="pre">./scripts/collisions/plot_compare_breakup.py</span></code>.
+E.g.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>./scripts/collisions/plot_compare_breakup.py<span class="sb">``</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>/home/m/m300950/CLEO<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>/work/mh0731/m300950/validating_cleo/build/share/collisions/dimlessGBxboundaries_bucomp.dat<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>/work/mh0731/m300950/validating_cleo/build/bin/collisions<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>/work/mh0731/m300950/validating_cleo/build/bin/collisions
 </pre></div>
@@ -336,7 +370,7 @@ E.g.</p>
             
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 13 March 2026</div>
+              Last updated on 14 March 2026</div>
           </div>
           <div class="right-details">
             
@@ -362,6 +396,7 @@ E.g.</p>
 <li><a class="reference internal" href="#initial-conditions">Initial conditions</a></li>
 <li><a class="reference internal" href="#run-model">Run Model</a></li>
 <li><a class="reference internal" href="#plot-results">Plot Results</a></li>
+<li><a class="reference internal" href="#breakup-comparison">Breakup Comparison</a></li>
 </ul>
 </li>
 </ul>
