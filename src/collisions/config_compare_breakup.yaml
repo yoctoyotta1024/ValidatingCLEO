@@ -1,11 +1,11 @@
 # ----- ValidatingCLEO -----
-# File: config.yaml
+# File: config_compare_breakup.yaml
 # Project: config
-# Created Date: Thursday 20th March 2025
+# Created Date: Monday March 9th 2026
 # Author: Clara Bayley (CB)
 # Additional Contributors:
 # -----
-# Last Modified: Thursday 20th March 2025
+# Last Modified: Monday March 9th 2026
 # Modified By: CB
 # -----
 # License: BSD 3-Clause "New" or "Revised" License
@@ -40,7 +40,7 @@ timesteps:
   COLLTSTEP: XXX                                              # time between SD collision [s]
   MOTIONTSTEP: 1                                              # time between SDM motion [s]
   COUPLTSTEP: 1200                                            # time between dynamic couplings [s]
-  OBSTSTEP: 60                                                # time between SDM observations [s]
+  OBSTSTEP: XXX                                               # time between SDM observations [s]
   T_END: XXX                                                  # time span of integration from 0s to T_END [s]
 
 ### Initialisation Parameters ###
@@ -58,7 +58,11 @@ outputdata:
   zarrbasedir: XXX                                              # zarr store base directory
   maxchunk: 2500000                                             # maximum no. of elements in chunks of zarr store array
 
+### Microphysics Parameters ###
 microphysics:
   coalescence:
     constcoaleff:
-      coaleff: 1.0                                              # constant coalescence efficiency
+      coaleff: XXX                                             # constant coalescence efficiency
+  breakup:
+    constnfrags:
+      nfrags: XXX                                              # average no. of fragments per droplet breakup

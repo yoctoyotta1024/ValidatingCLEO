@@ -9,7 +9,7 @@
  * Author: Clara Bayley (CB)
  * Additional Contributors:
  * -----
- * Last Modified: Wednesday 16th April 2025
+ * Last Modified: Monday 9th March 2026
  * Modified By: CB
  * -----
  * License: BSD 3-Clause "New" or "Revised" License
@@ -19,7 +19,7 @@
  * Program for CLEO 0-D box model of collisions as in Shima et al. 2009
  * with coalescence, rebound and breakup with glag decided based on section 4 of
  * Testik et al. 2011 (figure 12) as well as coalescence efficiency from
- * Straub et al. 2010.
+ * Straub et al. 2010. With number of fragments from Schlottke et al. 2010 (figure 13).
  */
 
 #include "./main_supplement.hpp"

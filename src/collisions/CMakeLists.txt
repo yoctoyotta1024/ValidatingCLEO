@@ -63,3 +63,57 @@ set_target_properties(${exec} PROPERTIES
   CMAKE_CXX_STANDARD_REQUIRED ON
   CMAKE_CXX_EXTENSIONS ON
   CXX_STANDARD 20)
+
+### create primary executable 3 ###
+set(exec colls_straub_schlottke)
+add_executable(${exec} EXCLUDE_FROM_ALL "main_straub_schlottke.cpp")
+
+# Add directories and link libraries to target
+target_link_libraries(${exec} PRIVATE cartesiandomain "${CLEOLIBS}")
+target_link_libraries(${exec} PUBLIC Kokkos::kokkos)
+target_include_directories(${exec} PRIVATE "${CLEO_SOURCE_DIR}/libs") # CLEO libs directory
+
+# set specific C++ compiler options for target (optional)
+#target_compile_options(${exec} PRIVATE)
+
+# set compiler properties for target(s)
+set_target_properties(${exec} PROPERTIES
+  CMAKE_CXX_STANDARD_REQUIRED ON
+  CMAKE_CXX_EXTENSIONS ON
+  CXX_STANDARD 20)
+
+### create primary executable 3 ###
+set(exec colls_straub_fixednfrags)
+add_executable(${exec} EXCLUDE_FROM_ALL "main_straub_fixednfrags.cpp")
+
+# Add directories and link libraries to target
+target_link_libraries(${exec} PRIVATE cartesiandomain "${CLEOLIBS}")
+target_link_libraries(${exec} PUBLIC Kokkos::kokkos)
+target_include_directories(${exec} PRIVATE "${CLEO_SOURCE_DIR}/libs") # CLEO libs directory
+
+# set specific C++ compiler options for target (optional)
+#target_compile_options(${exec} PRIVATE)
+
+# set compiler properties for target(s)
+set_target_properties(${exec} PROPERTIES
+  CMAKE_CXX_STANDARD_REQUIRED ON
+  CMAKE_CXX_EXTENSIONS ON
+  CXX_STANDARD 20)
+
+  ### create primary executable 3 ###
+set(exec colls_constcoalbu_fixednfrags)
+add_executable(${exec} EXCLUDE_FROM_ALL "main_constcoalbu_fixednfrags.cpp")
+
+# Add directories and link libraries to target
+target_link_libraries(${exec} PRIVATE cartesiandomain "${CLEOLIBS}")
+target_link_libraries(${exec} PUBLIC Kokkos::kokkos)
+target_include_directories(${exec} PRIVATE "${CLEO_SOURCE_DIR}/libs") # CLEO libs directory
+
+# set specific C++ compiler options for target (optional)
+#target_compile_options(${exec} PRIVATE)
+
+# set compiler properties for target(s)
+set_target_properties(${exec} PROPERTIES
+  CMAKE_CXX_STANDARD_REQUIRED ON
+  CMAKE_CXX_EXTENSIONS ON
+  CXX_STANDARD 20)
