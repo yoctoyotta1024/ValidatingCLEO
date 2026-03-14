@@ -2,6 +2,25 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.10.0](https://github.com/yoctoyotta1024/ValidatingCLEO/compare/cc24102f146cbcd706eed1b4c64e0e7fc458c7e2..v0.10.0) - 2026-03-14
+#### Documentation
+- clearer about collision executables - ([469a325](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/469a325211f5070ec7b474bb6c908cdd0d2e9909)) - clara.bayley
+- document how to run breakup comparison - ([69918b0](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/69918b08983e7bdf62e4366cadc5fcd26a234fdc)) - clara.bayley
+#### Features
+- scripts to plot breakup comparison results - ([22876a2](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/22876a2c38b81209e05478429261dd060b4f83cc)) - clara.bayley
+- add more executables to breakup comparison - ([3ad771a](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/3ad771a02cfe8b598ad6dbf1ea36c7725a64d1e0)) - clara.bayley
+- scripts to create initial conditions for breakup comparison - ([21039db](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/21039dbb4f8499755ed3e43b309b00749bc857fb)) - clara.bayley
+- helper script to run breakup comparison - ([065618c](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/065618c1c2e5c72637030e99d61a54d40dca068b)) - clara.bayley
+- new executable for straub with fixed nfrags - ([e5a25cd](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/e5a25cd64c57ce3e7e6574c95f5c067a1ce4226f)) - clara.bayley
+#### Miscellaneous Chores
+- update cleo version - ([cc24102](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/cc24102f146cbcd706eed1b4c64e0e7fc458c7e2)) - clara.bayley
+#### Refactoring
+- improve initial conditions - ([c69f4ee](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/c69f4ee2baef7d3700da6fc2ace41e6e4824f888)) - clara.bayley
+- use optional coaleff for long kernel - ([03bbb08](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/03bbb086756e8564c1283bc8a681087c7e100604)) - clara.bayley
+- change testikstraub_fixednfrags to straub_fixednfrags - ([76c248b](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/76c248b148d163995d119eeacb456b5f4e64dad2)) - clara.bayley
+
+- - -
+
 ## [v0.9.0](https://github.com/yoctoyotta1024/ValidatingCLEO/compare/0ae0d849d7e1d5bb4ee4f2f3c83bc7ef8e7cd83f..v0.9.0) - 2026-03-13
 #### Features
 - new quickplot for comparing ventillation effect - ([0ae0d84](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/0ae0d849d7e1d5bb4ee4f2f3c83bc7ef8e7cd83f)) - clara.bayley
