@@ -36,7 +36,13 @@ sys.path.append(str(Path(__file__).resolve().parents[2] / "src"))
 import collisions.initconds_compare_breakup as iccb
 
 
-def main(path2pySD, path2build, original_config, isfigures=[False, False]):
+def main(
+    path2pySD,
+    path2build,
+    original_config,
+    use_marshall_parmer=False,
+    isfigures=[False, False],
+):
     if not (
         path2build.is_dir()
         and all([(path2build / f"{d}").is_dir() for d in ["tmp", "share", "bin"]])
@@ -50,7 +56,10 @@ def main(path2pySD, path2build, original_config, isfigures=[False, False]):
             path2dir.mkdir(exist_ok=True)
 
     config_filenames = iccb.generate_configurations(
-        path2pySD, path2build, original_config
+        path2pySD,
+        path2build,
+        original_config,
+        use_marshall_parmer,
     )
 
     iccb.gridbox_boundaries(path2pySD, config_filenames[0], isfigures=isfigures)
@@ -93,4 +102,12 @@ if __name__ == "__main__":
     if args.is_savefigs == "TRUE":
         isfigures[1] = True
 
-    main(path2pySD, path2build, original_config, isfigures=isfigures)
+    use_marshall_parmer = False
+
+    main(
+        path2pySD,
+        path2build,
+        original_config,
+        use_marshall_parmer=use_marshall_parmer,
+        isfigures=isfigures,
+    )

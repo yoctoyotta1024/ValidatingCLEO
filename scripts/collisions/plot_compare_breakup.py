@@ -30,28 +30,43 @@ sys.path.append(str(Path(__file__).resolve().parents[2] / "src"))
 import collisions.plot_compare_breakup as breakupplt
 
 
-def main(path2CLEO, grid_filename, path2bin, path4figs):
-    datasets = {}
-    setups = {}
-    for r in range(9):
-        datasets[r] = path2bin / f"sol_bucomp_{r}.zarr"
-        setups[r] = path2bin / f"setup_bucomp_{r}.txt"
+def main(path2CLEO, grid_filename, path2bin, path4figs, plot_marshall_parmer=False):
+    if not plot_marshall_parmer:
+        datasets = {}
+        setups = {}
+        for r in range(9):
+            datasets[r] = path2bin / f"sol_bucomp_{r}.zarr"
+            setups[r] = path2bin / f"setup_bucomp_{r}.txt"
 
-    fig1, fig2, fig3 = breakupplt.plot_compare_breakup(
-        path2CLEO, grid_filename, datasets, setups
-    )
+        fig1, fig2, fig3 = breakupplt.plot_compare_breakup(
+            path2CLEO, grid_filename, datasets, setups
+        )
 
-    savename = path4figs / "dejong2023_fig7a_as_timeseries.png"
-    fig1.savefig(savename, dpi=400, bbox_inches="tight", facecolor="w")
-    print("Figure .png saved as: " + str(savename))
+        savename = path4figs / "dejong2023_fig7a_as_timeseries.png"
+        fig1.savefig(savename, dpi=400, bbox_inches="tight", facecolor="w")
+        print("Figure .png saved as: " + str(savename))
 
-    savename = path4figs / "dejong2023_fig7a.pdf"
-    fig2.savefig(savename, dpi=400, bbox_inches="tight", facecolor="w")
-    print("Figure .pdf saved as: " + str(savename))
+        savename = path4figs / "dejong2023_fig7a.pdf"
+        fig2.savefig(savename, dpi=400, bbox_inches="tight", facecolor="w")
+        print("Figure .pdf saved as: " + str(savename))
 
-    savename = path4figs / "dejong2023_fig8.pdf"
-    fig3.savefig(savename, dpi=400, bbox_inches="tight", facecolor="w")
-    print("Figure .pdf saved as: " + str(savename))
+        savename = path4figs / "dejong2023_fig8.png"
+        fig3.savefig(savename, dpi=400, bbox_inches="tight", facecolor="w")
+        print("Figure .png saved as: " + str(savename))
+    else:
+        datasets = {}
+        setups = {}
+        for r in [2, 3, 4, 5]:
+            datasets[r] = path2bin / f"sol_bucomp_marshpam_{r}.zarr"
+            setups[r] = path2bin / f"setup_bucomp_marshpam_{r}.txt"
+
+        fig4 = breakupplt.plot_compare_marshall_parmer_breakup(
+            path2CLEO, grid_filename, datasets, setups
+        )
+
+        savename = path4figs / "dejong2023_fig9.pdf"
+        fig4.savefig(savename, dpi=400, bbox_inches="tight", facecolor="w")
+        print("Figure .pdf saved as: " + str(savename))
 
 
 if __name__ == "__main__":
@@ -68,4 +83,12 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    main(args.path2CLEO, args.grid_filename, args.path2bin, args.path4figs)
+    plot_marshall_parmer = False
+
+    main(
+        args.path2CLEO,
+        args.grid_filename,
+        args.path2bin,
+        args.path4figs,
+        plot_marshall_parmer=plot_marshall_parmer,
+    )

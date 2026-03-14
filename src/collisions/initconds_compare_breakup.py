@@ -22,7 +22,9 @@ comparison study with de Jong et al. 2023.
 """
 
 
-def generate_configurations(path2pySD, path2build, original_config):
+def generate_configurations(
+    path2pySD, path2build, original_config, use_marshall_parmer
+):
     import shutil
     import sys
 
@@ -37,14 +39,22 @@ def generate_configurations(path2pySD, path2build, original_config):
     constants_filename = (
         path2build / "_deps" / "cleo-src" / "libs" / "cleoconstants.hpp"
     )
-    grid_filename = sharepath / "dimlessGBxboundaries_bucomp.dat"
+
+    if use_marshall_parmer:
+        grid_filename = sharepath / "dimlessGBxboundaries_bucomp_marshpam.dat"
+    else:
+        grid_filename = sharepath / "dimlessGBxboundaries_bucomp.dat"
 
     # parameters specific for each run
     nruns = (
         9  # [long, testikstraub+schlottke, straub+schlottke, 3x straub, 3x constcoalbu]
     )
-    volexpr0 = [30.531e-06] * nruns
-    numconc = [100e6] * nruns
+    if use_marshall_parmer:
+        volexpr0 = ["n/a"] * nruns
+        numconc = ["XXX"] * nruns
+    if not use_marshall_parmer:
+        volexpr0 = [30.531e-06] * nruns
+        numconc = [100e6] * nruns
     maxnsupers = [8192] * nruns
     COLLTSTEP = [1] * nruns
     OBSTSTEP = [10] + [60] * 5 + [10] * 3
@@ -54,11 +64,14 @@ def generate_configurations(path2pySD, path2build, original_config):
 
     config_filenames = []
     for r in range(nruns):
-        cf = tmppath / f"config_bucomp_{r}.yaml"
+        label = "bucomp"
+        if use_marshall_parmer:
+            label += "_marshpam"
+        cf = tmppath / f"config_{label}_{r}.yaml"
         shutil.copy(original_config, cf)
         config_filenames.append(cf)
 
-        initsupers_filename = str(sharepath / f"dimlessSDsinit_bucomp_{r}.dat")
+        initsupers_filename = str(sharepath / f"dimlessSDsinit_{label}_{r}.dat")
 
         params = {
             "savefigpath": str(savefigpath),
@@ -72,10 +85,11 @@ def generate_configurations(path2pySD, path2build, original_config):
             "constants_filename": str(constants_filename),
             "grid_filename": str(grid_filename),
             "initsupers_filename": initsupers_filename,
-            "setup_filename": str(binpath / f"setup_bucomp_{r}.txt"),
-            "zarrbasedir": str(binpath / f"sol_bucomp_{r}.zarr"),
+            "setup_filename": str(binpath / f"setup_{label}_{r}.txt"),
+            "zarrbasedir": str(binpath / f"sol_{label}_{r}.zarr"),
             "coaleff": coaleff[r],
             "nfrags": nfrags[r],
+            "use_marshall_parmer": use_marshall_parmer,
         }
         editconfigfile.edit_config_params(cf, params)
 
@@ -106,9 +120,11 @@ def gridbox_boundaries(path2pySD, config_filename, isfigures=[False, False]):
         savefigpath = Path(pyconfig["paths"]["savefigpath"])
 
         ### --- settings for 0-D Model gridbox boundaries --- ###
-        zgrid = [0, 10, 10]
-        xgrid = [0, 10, 10]
-        ygrid = [0, 10, 10]
+        if pyconfig["supers"]["use_marshall_parmer"]:
+            grid_spacing = [0, 100, 100]  # (!) must be consistent with ``volume'' below
+        else:
+            grid_spacing = [0, 10, 10]
+        zgrid = xgrid = ygrid = grid_spacing
         ### ---------------------------------------------------------------- ###
 
         ### -------------------- INPUT FILES GENERATION -------------------- ###
@@ -139,6 +155,8 @@ def initial_superdroplet_conditions(
     )
     from pySD import geninitconds as gic
 
+    from .probdists_marshallpalmer import get_marshall_palmer_generators
+
     config = yaml.safe_load(open(config_filename))
     pyconfig = config["python_initconds"]
 
@@ -162,14 +180,20 @@ def initial_superdroplet_conditions(
         ### --- settings for initial superdroplets --- ###
         # settings for superdroplet attributes
         dryradius = pyconfig["supers"]["dryradius"]
-        volexpr0 = pyconfig["supers"]["volexpr0"]
-        numconc = pyconfig["supers"]["numconc"]
-        rspan = [5e-6, 7e-5]
+        if pyconfig["supers"]["use_marshall_parmer"]:
+            volume = 100**3  # (!) must be consistent with grid above [m^3]
+            rspan = [5e-7, 4e-3]  # [m]
+            radiigen, xiprobdist = get_marshall_palmer_generators(rspan, volume)
+            numconc = xiprobdist.calc_numconc()
+        else:
+            rspan = [5e-6, 7e-5]
+            volexpr0 = pyconfig["supers"]["volexpr0"]
+            numconc = pyconfig["supers"]["numconc"]
+            xiprobdist = probdists.VolExponential(volexpr0, rspan)
+            radiigen = rgens.SampleLog10RadiiGen(rspan)
 
         # attribute generators
-        radiigen = rgens.SampleLog10RadiiGen(rspan)
         dryradiigen = rgens.MonoAttrGen(dryradius)
-        xiprobdist = probdists.VolExponential(volexpr0, rspan)
         coord3gen = None
         coord1gen = None
         coord2gen = None
