@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.11.0](https://github.com/yoctoyotta1024/ValidatingCLEO/compare/553e299b83ca7937328ed31e4147aed7089b5aa9..v0.11.0) - 2026-03-14
+#### Documentation
+- note on using marshall palmer distrib. in breakup examples - ([c8b02f9](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/c8b02f95dcd039ed2ca1458f1bb584e39565cee7)) - clara.bayley
+#### Features
+- new plot for figure 9 de jong et al 2023 - ([9baed7c](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/9baed7c671806c5dd992145f41a019c9d45dfd77)) - clara.bayley
+- init conds for marshall palmer dist - ([553e299](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/553e299b83ca7937328ed31e4147aed7089b5aa9)) - clara.bayley
+#### Refactoring
+- save fig8 as png - ([55fdfd1](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/55fdfd19e7ca04cc03673010b1db9bb2cf6ec883)) - clara.bayley
+- run script for breakup can use marshpam config instead - ([a4edc60](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/a4edc6033f2fc6e158358ace43e77779db6b37e7)) - clara.bayley
+
+- - -
+
 ## [v0.10.0](https://github.com/yoctoyotta1024/ValidatingCLEO/compare/cc24102f146cbcd706eed1b4c64e0e7fc458c7e2..v0.10.0) - 2026-03-14
 #### Documentation
 - clearer about collision executables - ([469a325](https://github.com/yoctoyotta1024/ValidatingCLEO/commit/469a325211f5070ec7b474bb6c908cdd0d2e9909)) - clara.bayley
