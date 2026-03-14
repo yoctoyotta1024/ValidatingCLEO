@@ -305,6 +305,10 @@ E.g.</p>
 <p>To compare the results of the collision test cases including breakup, first build and compile the
 breakup excutables <code class="docutils literal notranslate"><span class="pre">colls_testikstraub</span></code>, <code class="docutils literal notranslate"><span class="pre">colls_straub_schlottke</span></code>, <code class="docutils literal notranslate"><span class="pre">colls_straub_fixednfrags</span></code> and
 <code class="docutils literal notranslate"><span class="pre">constcoalbu_fixednfrags</span></code> as above, as well as the long executable <code class="docutils literal notranslate"><span class="pre">colls_long</span></code>.</p>
+<p>To run and plot the breakup comparison with the marshall palmer distribution you first need to
+set <code class="docutils literal notranslate"><span class="pre">use_marshall_parmer</span></code> and <code class="docutils literal notranslate"><span class="pre">plot_marshall_parmer</span></code>
+to <code class="docutils literal notranslate"><span class="pre">True</span></code> in the scripts for <code class="docutils literal notranslate"><span class="pre">initconds_compare_breakup.py</span></code> and <code class="docutils literal notranslate"><span class="pre">plot_compare_breakup</span></code>,
+and in <code class="docutils literal notranslate"><span class="pre">run_compare_breakup.sh</span></code> you need to set <code class="docutils literal notranslate"><span class="pre">label=bucomp_marshpam</span></code></p>
 <p>The generate the initial conditons similarly but with the <code class="docutils literal notranslate"><span class="pre">initconds_compare_breakup.py</span></code> script
 and <code class="docutils literal notranslate"><span class="pre">config_compare_breakup.yaml</span></code>.
 E.g.</p>
@@ -327,7 +331,7 @@ E.g.</p>
 E.g.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>./scripts/collisions/plot_compare_breakup.py<span class="sb">``</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>/home/m/m300950/CLEO<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>/work/mh0731/m300950/validating_cleo/build/share/collisions/dimlessGBxboundaries_bucomp.dat<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>/work/mh0731/m300950/validating_cleo/build/share/collisions/dimlessGBxboundaries_bucomp<span class="o">[</span>_marshpam<span class="o">]</span>.dat<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>/work/mh0731/m300950/validating_cleo/build/bin/collisions<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>/work/mh0731/m300950/validating_cleo/build/bin/collisions
 </pre></div>
